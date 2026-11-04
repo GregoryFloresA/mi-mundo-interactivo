@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Mundo Interactivo</title>
+</head>
+
+<body>
+
+    <h1>Mi Mundo Interactivo</h1>
+
+    <p>Escanea una tarjeta o escribe un código.</p>
+
+    <input
+        type="text"
+        id="codigo"
+        placeholder="ANI001">
+
+    <button onclick="probar()">
+        Probar
+    </button>
+
+    <h2 id="resultado"></h2>
+
+    <script>
+
+        function probar(){
+
+            let codigo =
+                document
+                .getElementById("codigo")
+                .value
+                .trim()
+                .toUpperCase();
+
+            if(codigo==="ANI001")
+            {
+                document
+                .getElementById("resultado")
+                .innerText="León";
+            }
+            else
+            {
+                document
+                .getElementById("resultado")
+                .innerText="Código no encontrado";
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
