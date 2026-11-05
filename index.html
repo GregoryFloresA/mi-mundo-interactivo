@@ -1,559 +1,1610 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-
-<title>Mi Mundo Interactivo</title>
-
-<style>
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-
-    margin:0;
-    padding:20px;
-
-    min-height:100vh;
-
-    font-family:Arial,sans-serif;
-
-    overflow:hidden;
-
-    background:
-    linear-gradient(
-        135deg,
-        #dff6ff,
-        #eef9ff,
-        #ffffff
-    );
-
-}
-
-/* Fondo animado */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    width:200%;
-    height:200%;
-
-    top:-50%;
-    left:-50%;
-
-    background:
-
-    radial-gradient(
-        circle,
-        rgba(0,180,255,0.08) 0%,
-        transparent 20%
-    ),
-
-    radial-gradient(
-        circle,
-        rgba(0,120,255,0.08) 0%,
-        transparent 20%
-    );
-
-    background-size:
-    400px 400px,
-    600px 600px;
-
-    animation:
-    moverFondo 30s linear infinite;
-
-    z-index:-1;
-
-}
-
-@keyframes moverFondo{
-
-    from{
-        transform:translate(0,0);
-    }
-
-    to{
-        transform:translate(-150px,-100px);
-    }
-
-}
-
-h1{
-
-    color:#1f4b99;
-
-    font-size:48px;
-
-    margin-bottom:10px;
-
-}
-
-#codigo{
-
-    width:450px;
-
-    max-width:90vw;
-
-    padding:18px;
-
-    border:none;
-
-    border-radius:30px;
-
-    font-size:28px;
-
-    text-align:center;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,0.15);
-
-    outline:none;
-
-}
-
-/* Estado */
-
-#estado{
-
-    display:inline-block;
-
-    margin-top:25px;
-
-    padding:15px 35px;
-
-    border-radius:30px;
-
-    background:white;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,0.1);
-
-    font-size:40px;
-
-    font-weight:bold;
-
-    color:#2854a3;
-
-}
-
-/* Preguntas */
-
-#pregunta{
-
-    display:inline-block;
-
-    margin-top:20px;
-
-    padding:15px 35px;
-
-    background:#fff4d6;
-
-    border-radius:25px;
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,0.08);
-
-    font-size:30px;
-
-    color:#7c5600;
-
-    font-weight:bold;
-
-}
-
-/* Imagen */
-
-#imagenAnimal{
-
-    margin-top:20px;
-
-    max-width:90vw;
-
-    max-height:65vh;
-
-    display:none;
-
-    border-radius:25px;
-
-    box-shadow:
-        0 10px 40px rgba(0,0,0,0.20);
-
-}
-
-/* Video */
-
-#videoAnimal{
-
-    margin-top:20px;
-
-    max-width:90vw;
-
-    max-height:65vh;
-
-    display:none;
-
-    border-radius:25px;
-
-    box-shadow:
-        0 10px 40px rgba(0,0,0,0.20);
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi Mundo Interactivo</title>
+
+    <style>
+        :root {
+            --azul-texto: #6f96d4;
+            --coral: #f27f68;
+            --blanco: #ffffff;
+            --sombra: 0 20px 45px rgba(64, 82, 140, 0.22);
+            --sombra-suave: 0 12px 30px rgba(64, 82, 140, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            overflow: hidden;
+            font-family:
+                "Trebuchet MS",
+                "Arial Rounded MT Bold",
+                Arial,
+                sans-serif;
+
+            text-align: center;
+            color: #445278;
+            transition: background 1.2s ease;
+        }
+
+        /*
+        =====================================================
+        FONDOS ALEATORIOS
+        =====================================================
+        */
+
+        body.tema-cielo {
+            background:
+                linear-gradient(
+                    145deg,
+                    #a9c9f7 0%,
+                    #c8d5ff 49%,
+                    #d7c8fa 100%
+                );
+        }
+
+        body.tema-amanecer {
+            background:
+                linear-gradient(
+                    145deg,
+                    #fedbbb 0%,
+                    #f8c9da 43%,
+                    #c8d9ff 100%
+                );
+        }
+
+        body.tema-menta {
+            background:
+                linear-gradient(
+                    145deg,
+                    #bcebd9 0%,
+                    #d8f1e9 42%,
+                    #c7d8fa 100%
+                );
+        }
+
+        body.tema-lavanda {
+            background:
+                linear-gradient(
+                    145deg,
+                    #c9c5f7 0%,
+                    #e1cef6 46%,
+                    #f4d8e7 100%
+                );
+        }
+
+        /*
+        =====================================================
+        DECORACIÓN ANIMADA DEL FONDO
+        =====================================================
+        */
+
+        .fondo-animado {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .burbuja {
+            position: absolute;
+            border-radius: 50%;
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    rgba(255,255,255,0.92),
+                    rgba(255,255,255,0.24) 56%,
+                    rgba(255,255,255,0.05)
+                );
+
+            box-shadow:
+                inset 0 0 30px rgba(255,255,255,0.5),
+                0 12px 30px rgba(94,111,175,0.08);
+
+            opacity: 0.56;
+            animation:
+                flotarBurbuja var(--duracion)
+                ease-in-out infinite alternate;
+        }
+
+        .b1 {
+            width: 170px;
+            height: 170px;
+            left: 3%;
+            top: 12%;
+            --duracion: 18s;
+        }
+
+        .b2 {
+            width: 110px;
+            height: 110px;
+            left: 19%;
+            top: 66%;
+            --duracion: 22s;
+            animation-delay: -5s;
+        }
+
+        .b3 {
+            width: 210px;
+            height: 210px;
+            right: 4%;
+            top: 9%;
+            --duracion: 26s;
+            animation-delay: -11s;
+        }
+
+        .b4 {
+            width: 130px;
+            height: 130px;
+            right: 17%;
+            bottom: 8%;
+            --duracion: 20s;
+            animation-delay: -7s;
+        }
+
+        .b5 {
+            width: 80px;
+            height: 80px;
+            left: 48%;
+            top: 8%;
+            --duracion: 17s;
+            animation-delay: -3s;
+        }
+
+        .b6 {
+            width: 145px;
+            height: 145px;
+            left: 39%;
+            bottom: -20px;
+            --duracion: 24s;
+            animation-delay: -13s;
+        }
+
+        .nube {
+            position: absolute;
+            width: 250px;
+            height: 82px;
+            border-radius: 80px;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.96),
+                    rgba(255,248,246,0.84)
+                );
+
+            filter:
+                drop-shadow(
+                    0 15px 20px rgba(84,99,160,0.12)
+                );
+
+            opacity: 0.86;
+
+            animation:
+                moverNube var(--tiempo)
+                linear infinite;
+        }
+
+        .nube::before,
+        .nube::after {
+            content: "";
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .nube::before {
+            width: 126px;
+            height: 126px;
+            left: 34px;
+            top: -54px;
+        }
+
+        .nube::after {
+            width: 154px;
+            height: 154px;
+            right: 22px;
+            top: -72px;
+        }
+
+        .nube-1 {
+            top: 16%;
+            left: -310px;
+            transform: scale(0.82);
+            --tiempo: 52s;
+        }
+
+        .nube-2 {
+            top: 68%;
+            left: -390px;
+            transform: scale(1.1);
+            --tiempo: 68s;
+            animation-delay: -28s;
+        }
+
+        .nube-3 {
+            top: 39%;
+            left: -330px;
+            transform: scale(0.62);
+            --tiempo: 61s;
+            animation-delay: -44s;
+        }
+
+        @keyframes flotarBurbuja {
+            0% {
+                transform:
+                    translate3d(0, 0, 0)
+                    scale(1);
+            }
+
+            100% {
+                transform:
+                    translate3d(35px, -28px, 0)
+                    scale(1.06);
+            }
+        }
+
+        @keyframes moverNube {
+            0% {
+                margin-left: -320px;
+            }
+
+            100% {
+                margin-left: calc(100vw + 650px);
+            }
+        }
+
+        /*
+        =====================================================
+        CONTENEDOR PRINCIPAL
+        =====================================================
+        */
+
+        .aplicacion {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100vh;
+            min-height: 650px;
+        }
+
+        /*
+        =====================================================
+        PANTALLA INICIAL
+        =====================================================
+        */
+
+        #pantallaInicial {
+            width: 100%;
+            height: 100%;
+            padding:
+                clamp(20px, 3vh, 42px)
+                clamp(20px, 5vw, 90px);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                opacity 0.5s ease,
+                transform 0.5s ease;
+        }
+
+        .burbuja-titulo {
+            position: relative;
+            display: inline-block;
+
+            padding:
+                clamp(18px, 2.5vh, 28px)
+                clamp(34px, 6vw, 90px);
+
+            border-radius: 38px;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.98),
+                    rgba(249,246,255,0.91)
+                );
+
+            color: var(--coral);
+
+            font-size:
+                clamp(34px, 5vw, 72px);
+
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            text-shadow:
+                0 4px 0 rgba(196,83,66,0.12);
+
+            box-shadow: var(--sombra);
+        }
+
+        .burbuja-titulo::after {
+            content: "";
+            position: absolute;
+            left: 10%;
+            bottom: -35px;
+
+            width: 54px;
+            height: 54px;
+
+            background: rgba(249,246,255,0.96);
+            clip-path:
+                polygon(
+                    0 0,
+                    100% 0,
+                    30% 100%
+                );
+        }
+
+        .burbuja-mensaje {
+            display: inline-block;
+            margin-top: clamp(30px, 4vh, 54px);
+
+            padding:
+                14px
+                clamp(25px, 4vw, 55px);
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.98),
+                    rgba(248,246,255,0.9)
+                );
+
+            color: var(--azul-texto);
+
+            font-size:
+                clamp(24px, 3vw, 42px);
+
+            font-weight: 900;
+            box-shadow: var(--sombra-suave);
+        }
+
+        /*
+        =====================================================
+        TARJETAS DE NIVELES
+        =====================================================
+        */
+
+        #contenedorNiveles {
+            position: relative;
+            width: min(1250px, 94vw);
+
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: clamp(22px, 4vw, 58px);
+
+            margin-top: clamp(35px, 5vh, 66px);
+        }
+
+        .tarjeta-nivel {
+            position: relative;
+            width: clamp(210px, 24vw, 340px);
+            min-height: clamp(290px, 43vh, 500px);
+
+            padding:
+                clamp(22px, 3vh, 38px)
+                20px;
+
+            border-radius:
+                clamp(34px, 4vw, 58px);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 24px 45px rgba(62,76,135,0.23),
+                inset 0 5px 12px rgba(255,255,255,0.52),
+                inset 0 -10px 18px rgba(80,90,140,0.11);
+
+            transform-origin: center center;
+
+            transition:
+                transform 0.88s
+                cubic-bezier(0.22, 1.2, 0.36, 1),
+
+                opacity 0.55s ease,
+
+                filter 0.55s ease;
+        }
+
+        .nivel-1 {
+            background:
+                linear-gradient(
+                    160deg,
+                    #b8e9bd,
+                    #7dcf9e
+                );
+        }
+
+        .nivel-2 {
+            background:
+                linear-gradient(
+                    160deg,
+                    #ffe78c,
+                    #f4bf5c
+                );
+        }
+
+        .nivel-3 {
+            background:
+                linear-gradient(
+                    160deg,
+                    #ff9b8e,
+                    #ed625f
+                );
+        }
+
+        .circulo-icono {
+            width:
+                clamp(145px, 15vw, 220px);
+
+            aspect-ratio: 1;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #fffdfb,
+                    #f9f0ed
+                );
+
+            border:
+                clamp(7px, 0.8vw, 12px)
+                solid rgba(255,255,255,0.9);
+
+            box-shadow:
+                0 12px 24px rgba(66,77,132,0.22),
+                inset 0 4px 12px rgba(255,255,255,0.8);
+
+            font-size:
+                clamp(70px, 8vw, 130px);
+        }
+
+        .nombre-nivel {
+            margin-top: 20px;
+
+            color: white;
+
+            font-size:
+                clamp(34px, 4vw, 58px);
+
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            text-shadow:
+                0 5px 4px rgba(63,63,94,0.18);
+        }
+
+        .tarjeta-nivel.seleccionada {
+            z-index: 20;
+
+            transform:
+                translate(
+                    var(--mover-x),
+                    var(--mover-y)
+                )
+                scale(1.18);
+
+            animation:
+                saltarTarjeta
+                0.68s
+                cubic-bezier(0.2, 1.35, 0.35, 1);
+        }
+
+        .tarjeta-nivel.salir-izquierda {
+            transform:
+                translateX(-135vw)
+                rotate(-8deg)
+                scale(0.78);
+
+            opacity: 0;
+            filter: blur(3px);
+        }
+
+        .tarjeta-nivel.salir-derecha {
+            transform:
+                translateX(135vw)
+                rotate(8deg)
+                scale(0.78);
+
+            opacity: 0;
+            filter: blur(3px);
+        }
+
+        @keyframes saltarTarjeta {
+            0% {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+            }
+
+            38% {
+                transform:
+                    translate(
+                        calc(var(--mover-x) * 0.35),
+                        calc(var(--mover-y) * 0.35 - 45px)
+                    )
+                    scale(1.08);
+            }
+
+            100% {
+                transform:
+                    translate(
+                        var(--mover-x),
+                        var(--mover-y)
+                    )
+                    scale(1.18);
+            }
+        }
+
+        /*
+        =====================================================
+        PANTALLA DEL JUEGO
+        =====================================================
+        */
+
+        #pantallaJuego {
+            display: none;
+            width: 100%;
+            height: 100%;
+
+            padding:
+                clamp(18px, 3vh, 38px)
+                clamp(18px, 4vw, 70px);
+
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            opacity: 0;
+            transform: scale(0.96);
+
+            transition:
+                opacity 0.55s ease,
+                transform 0.55s ease;
+        }
+
+        #pantallaJuego.visible {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #estado {
+            min-width: min(750px, 90vw);
+
+            padding:
+                clamp(14px, 2vh, 23px)
+                clamp(28px, 5vw, 65px);
+
+            border-radius: 35px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.98),
+                    rgba(247,246,255,0.92)
+                );
+
+            color: #607fc7;
+
+            font-size:
+                clamp(28px, 4vw, 55px);
+
+            font-weight: 900;
+
+            box-shadow: var(--sombra);
+        }
+
+        #pregunta {
+            min-height: 58px;
+            max-width: min(900px, 92vw);
+
+            margin-top: 20px;
+            padding:
+                14px
+                clamp(24px, 4vw, 52px);
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,253,233,0.98),
+                    rgba(255,240,188,0.94)
+                );
+
+            color: #8d650d;
+
+            font-size:
+                clamp(24px, 3vw, 43px);
+
+            font-weight: 900;
+
+            box-shadow: var(--sombra-suave);
+        }
+
+        #contenedorMultimedia {
+            position: relative;
+
+            width: min(1100px, 94vw);
+            height: min(650px, 65vh);
+
+            margin-top: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #imagenAnimal,
+        #videoAnimal {
+            position: absolute;
+
+            max-width: 100%;
+            max-height: 100%;
+
+            border-radius: 35px;
+
+            box-shadow:
+                0 25px 55px rgba(38,52,105,0.29);
+
+            object-fit: contain;
+
+            opacity: 0;
+            transform: scale(0.92);
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.55s ease,
+                transform 0.7s
+                cubic-bezier(0.21,1.05,0.35,1);
+        }
+
+        #imagenAnimal.visible,
+        #videoAnimal.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #imagenAnimal.saliendo {
+            opacity: 0;
+            transform: scale(1.04);
+        }
+
+        /*
+        =====================================================
+        CAPA DE TRANSICIÓN
+        =====================================================
+        */
+
+        #transicionNivel {
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(221,229,255,0.22);
+
+            backdrop-filter: blur(5px);
+        }
+
+        #transicionNivel.visible {
+            display: flex;
+        }
+
+        .mensaje-transicion {
+            padding:
+                30px
+                clamp(45px, 7vw, 100px);
+
+            border-radius: 45px;
+
+            background:
+                rgba(255,255,255,0.96);
+
+            box-shadow: var(--sombra);
+
+            color: #617fc4;
+
+            font-size:
+                clamp(38px, 6vw, 80px);
+
+            font-weight: 900;
+
+            animation:
+                aparecerMensaje
+                0.65s
+                cubic-bezier(0.21,1.3,0.4,1);
+        }
+
+        @keyframes aparecerMensaje {
+            from {
+                opacity: 0;
+                transform: scale(0.6);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /*
+        =====================================================
+        LECTOR OCULTO
+        =====================================================
+        */
+
+        #codigo {
+            position: fixed;
+            left: -5000px;
+            top: -5000px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        /*
+        =====================================================
+        ADAPTACIÓN PARA PANTALLAS PEQUEÑAS
+        =====================================================
+        */
+
+        @media (max-width: 800px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .aplicacion {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            #pantallaInicial {
+                min-height: 100vh;
+            }
+
+            #contenedorNiveles {
+                flex-wrap: wrap;
+            }
+
+            .tarjeta-nivel {
+                width: min(270px, 84vw);
+                min-height: 340px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
-<h1>Mi Mundo Interactivo</h1>
-
-<input
-    id="codigo"
-    type="text"
-    autofocus
-    placeholder="Escanea una tarjeta">
-
-<div id="estado"></div>
-
-<div id="pregunta"></div>
-
-<br>
-
-<img id="imagenAnimal">
-
-<video id="videoAnimal"></video>
-
-<script>
-
-let nivelActual = 0;
-let preguntaActual = null;
-
-let bloqueado = false;
-
-const animales = {
-
-"ANI001":{
-nombre:"León",
-emoji:"🦁",
-imagen:"recursos/leon.jpg",
-audio:"recursos/leon.mp3",
-video:"recursos/leon.mp4"
-},
-
-"ANI002":{
-nombre:"Elefante",
-emoji:"🐘",
-imagen:"recursos/elefante.jpg",
-audio:"recursos/elefante.mp3",
-video:"recursos/elefante.mp4"
-},
-
-"ANI003":{
-nombre:"Perro",
-emoji:"🐶",
-imagen:"recursos/perro.jpg",
-audio:"recursos/perro.mp3",
-video:"recursos/perro.mp4"
-},
-
-"ANI004":{
-nombre:"Gato",
-emoji:"🐱",
-imagen:"recursos/gato.jpg",
-audio:"recursos/gato.mp3",
-video:"recursos/gato.mp4"
-},
-
-"ANI005":{
-nombre:"Vaca",
-emoji:"🐮",
-imagen:"recursos/vaca.jpg",
-audio:"recursos/vaca.mp3",
-video:"recursos/vaca.mp4"
-}
-
-};
-
-const preguntas = [
-
-{
-pregunta:"¿Dónde está el león?",
-correcto:"ANI001"
-},
-
-{
-pregunta:"¿Dónde está el elefante?",
-correcto:"ANI002"
-},
-
-{
-pregunta:"¿Dónde está el perro?",
-correcto:"ANI003"
-},
-
-{
-pregunta:"¿Dónde está el gato?",
-correcto:"ANI004"
-},
-
-{
-pregunta:"¿Dónde está la vaca?",
-correcto:"ANI005"
-}
-
-];
-
-const estado =
-document.getElementById("estado");
-
-const pregunta =
-document.getElementById("pregunta");
-
-const imagen =
-document.getElementById("imagenAnimal");
-
-const video =
-document.getElementById("videoAnimal");
-
-function reproducirAudio(ruta)
-{
-    const audio = new Audio(ruta);
-    audio.play();
-    return audio;
-}
-
-function mostrarEsperaNivel()
-{
-    estado.innerHTML =
-    "ESCANEA UN NIVEL";
-
-    pregunta.innerHTML = "";
-
-    reproducirAudio(
-        "recursos/escanea.mp3"
-    );
-}
-
-function iniciarNivel1()
-{
-    nivelActual=1;
-
-    estado.innerHTML=
-    "NIVEL 1";
-
-    pregunta.innerHTML=
-    "Escanea un animal";
-
-    reproducirAudio(
-        "recursos/nivel1.mp3"
-    );
-}
-
-function iniciarNivel2()
-{
-    nivelActual=2;
-
-    estado.innerHTML=
-    "NIVEL 2";
-
-    reproducirAudio(
-        "recursos/nivel2.mp3"
-    );
-
-    setTimeout(
-        cargarPregunta,
-        1500
-    );
-}
-
-function cargarPregunta()
-{
-    let indice =
-    Math.floor(
-        Math.random()*preguntas.length
-    );
-
-    preguntaActual=
-    preguntas[indice];
-
-    pregunta.innerHTML=
-    preguntaActual.pregunta;
-}
-
-function mostrarAnimal(codigo)
-{
-    let animal = animales[codigo];
-
-    if(!animal)return;
-
-    bloqueado = true;
-
-    estado.innerHTML =
-    animal.emoji + " " +
-    animal.nombre;
-
-    pregunta.innerHTML = "";
-
-    imagen.src=animal.imagen;
-
-    imagen.style.display=
-    "block";
-
-    video.style.display=
-    "none";
-
-    let audio =
-    reproducirAudio(
-        animal.audio
-    );
-
-    audio.onended=function(){
-
-        imagen.style.display=
-        "none";
-
-        video.src=
-        animal.video;
-
-        video.style.display=
-        "block";
-
-        video.play();
-
-    };
-
-    video.onended=function(){
-
-        video.style.display=
-        "none";
-
-        bloqueado = false;
-
-        estado.innerHTML=
-        "NIVEL 1";
-
-        pregunta.innerHTML=
-        "Escanea un animal";
-
-    };
-}
-
-function evaluarPregunta(codigo)
-{
-
-    if(!preguntaActual)return;
-
-    if(
-        codigo===
-        preguntaActual.correcto
-    )
-    {
-
-        reproducirAudio(
-            "recursos/correcto.mp3"
+    <div class="fondo-animado">
+        <span class="burbuja b1"></span>
+        <span class="burbuja b2"></span>
+        <span class="burbuja b3"></span>
+        <span class="burbuja b4"></span>
+        <span class="burbuja b5"></span>
+        <span class="burbuja b6"></span>
+
+        <span class="nube nube-1"></span>
+        <span class="nube nube-2"></span>
+        <span class="nube nube-3"></span>
+    </div>
+
+    <main class="aplicacion">
+        <section id="pantallaInicial">
+            <div class="burbuja-titulo">
+                Mi mundo interactivo
+            </div>
+
+            <div class="burbuja-mensaje">
+                Listo para escanear
+            </div>
+
+            <div id="contenedorNiveles">
+                <article
+                    class="tarjeta-nivel nivel-1"
+                    data-nivel="1"
+                >
+                    <div class="circulo-icono">
+                        🦁
+                    </div>
+
+                    <div class="nombre-nivel">
+                        NIVEL 1
+                    </div>
+                </article>
+
+                <article
+                    class="tarjeta-nivel nivel-2"
+                    data-nivel="2"
+                >
+                    <div class="circulo-icono">
+                        ❓
+                    </div>
+
+                    <div class="nombre-nivel">
+                        NIVEL 2
+                    </div>
+                </article>
+
+                <article
+                    class="tarjeta-nivel nivel-3"
+                    data-nivel="3"
+                >
+                    <div class="circulo-icono">
+                        🎵
+                    </div>
+
+                    <div class="nombre-nivel">
+                        NIVEL 3
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="pantallaJuego">
+            <div id="estado">
+                Mi mundo interactivo
+            </div>
+
+            <div id="pregunta">
+                Escanea una tarjeta
+            </div>
+
+            <div id="contenedorMultimedia">
+                <img
+                    id="imagenAnimal"
+                    alt="Animal seleccionado"
+                >
+
+                <video
+                    id="videoAnimal"
+                    playsinline
+                    preload="metadata"
+                ></video>
+            </div>
+        </section>
+    </main>
+
+    <div id="transicionNivel">
+        <div
+            id="mensajeTransicion"
+            class="mensaje-transicion"
+        ></div>
+    </div>
+
+    <input
+        id="codigo"
+        type="text"
+        autocomplete="off"
+        autofocus
+        aria-label="Entrada del lector de códigos"
+    >
+
+    <script>
+        let nivelActual = 0;
+        let preguntaActual = null;
+        let bloqueado = false;
+        let ultimoIndicePregunta = -1;
+        let audioActual = null;
+
+        const animales = {
+            ANI001: {
+                nombre: "León",
+                emoji: "🦁",
+                imagen: "recursos/leon.jpg",
+                audio: "recursos/leon.mp3",
+                video: "recursos/leon.mp4"
+            },
+
+            ANI002: {
+                nombre: "Elefante",
+                emoji: "🐘",
+                imagen: "recursos/elefante.jpg",
+                audio: "recursos/elefante.mp3",
+                video: "recursos/elefante.mp4"
+            },
+
+            ANI003: {
+                nombre: "Perro",
+                emoji: "🐶",
+                imagen: "recursos/perro.jpg",
+                audio: "recursos/perro.mp3",
+                video: "recursos/perro.mp4"
+            },
+
+            ANI004: {
+                nombre: "Gato",
+                emoji: "🐱",
+                imagen: "recursos/gato.jpg",
+                audio: "recursos/gato.mp3",
+                video: "recursos/gato.mp4"
+            },
+
+            ANI005: {
+                nombre: "Vaca",
+                emoji: "🐮",
+                imagen: "recursos/vaca.jpg",
+                audio: "recursos/vaca.mp3",
+                video: "recursos/vaca.mp4"
+            }
+        };
+
+        const preguntasNivel2 = [
+            {
+                pregunta: "¿Dónde está el león?",
+                correcto: "ANI001"
+            },
+            {
+                pregunta: "¿Dónde está el elefante?",
+                correcto: "ANI002"
+            },
+            {
+                pregunta: "¿Dónde está el perro?",
+                correcto: "ANI003"
+            },
+            {
+                pregunta: "¿Dónde está el gato?",
+                correcto: "ANI004"
+            },
+            {
+                pregunta: "¿Dónde está la vaca?",
+                correcto: "ANI005"
+            }
+        ];
+
+        const temas = [
+            "tema-cielo",
+            "tema-amanecer",
+            "tema-menta",
+            "tema-lavanda"
+        ];
+
+        const entradaCodigo =
+            document.getElementById("codigo");
+
+        const pantallaInicial =
+            document.getElementById("pantallaInicial");
+
+        const pantallaJuego =
+            document.getElementById("pantallaJuego");
+
+        const estado =
+            document.getElementById("estado");
+
+        const pregunta =
+            document.getElementById("pregunta");
+
+        const imagen =
+            document.getElementById("imagenAnimal");
+
+        const video =
+            document.getElementById("videoAnimal");
+
+        const transicionNivel =
+            document.getElementById("transicionNivel");
+
+        const mensajeTransicion =
+            document.getElementById("mensajeTransicion");
+
+        function seleccionarFondoAleatorio() {
+            const indice =
+                Math.floor(Math.random() * temas.length);
+
+            document.body.classList.add(
+                temas[indice]
+            );
+        }
+
+        function mantenerFoco() {
+            setTimeout(() => {
+                entradaCodigo.focus();
+            }, 50);
+        }
+
+        function reproducirAudio(ruta) {
+            if (audioActual) {
+                audioActual.pause();
+                audioActual.currentTime = 0;
+            }
+
+            const audio = new Audio(ruta);
+            audioActual = audio;
+
+            audio.play().catch(() => {
+                console.log(
+                    "El navegador bloqueó temporalmente el audio."
+                );
+            });
+
+            return audio;
+        }
+
+        function limpiarMultimedia() {
+            if (audioActual) {
+                audioActual.pause();
+                audioActual.currentTime = 0;
+            }
+
+            video.pause();
+            video.currentTime = 0;
+            video.removeAttribute("src");
+            video.load();
+
+            imagen.classList.remove(
+                "visible",
+                "saliendo"
+            );
+
+            video.classList.remove("visible");
+
+            setTimeout(() => {
+                imagen.removeAttribute("src");
+            }, 400);
+        }
+
+        function reiniciarTarjetas() {
+            const tarjetas =
+                document.querySelectorAll(
+                    ".tarjeta-nivel"
+                );
+
+            tarjetas.forEach((tarjeta) => {
+                tarjeta.classList.remove(
+                    "seleccionada",
+                    "salir-izquierda",
+                    "salir-derecha"
+                );
+
+                tarjeta.style.removeProperty(
+                    "--mover-x"
+                );
+
+                tarjeta.style.removeProperty(
+                    "--mover-y"
+                );
+            });
+        }
+
+        function animarSeleccionNivel(numeroNivel) {
+            return new Promise((resolver) => {
+                const tarjetas =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".tarjeta-nivel"
+                        )
+                    );
+
+                const seleccionada =
+                    tarjetas.find(
+                        tarjeta =>
+                            tarjeta.dataset.nivel ===
+                            String(numeroNivel)
+                    );
+
+                if (!seleccionada) {
+                    resolver();
+                    return;
+                }
+
+                const rect =
+                    seleccionada.getBoundingClientRect();
+
+                const centroX =
+                    window.innerWidth / 2;
+
+                const centroY =
+                    window.innerHeight / 2;
+
+                const tarjetaCentroX =
+                    rect.left + rect.width / 2;
+
+                const tarjetaCentroY =
+                    rect.top + rect.height / 2;
+
+                const moverX =
+                    centroX - tarjetaCentroX;
+
+                const moverY =
+                    centroY - tarjetaCentroY;
+
+                seleccionada.style.setProperty(
+                    "--mover-x",
+                    moverX + "px"
+                );
+
+                seleccionada.style.setProperty(
+                    "--mover-y",
+                    moverY + "px"
+                );
+
+                seleccionada.classList.add(
+                    "seleccionada"
+                );
+
+                tarjetas.forEach((tarjeta) => {
+                    if (tarjeta === seleccionada) {
+                        return;
+                    }
+
+                    const tarjetaRect =
+                        tarjeta.getBoundingClientRect();
+
+                    if (
+                        tarjetaRect.left <
+                        rect.left
+                    ) {
+                        tarjeta.classList.add(
+                            "salir-izquierda"
+                        );
+                    } else {
+                        tarjeta.classList.add(
+                            "salir-derecha"
+                        );
+                    }
+                });
+
+                setTimeout(resolver, 1250);
+            });
+        }
+
+        function mostrarTransicion(texto) {
+            mensajeTransicion.textContent = texto;
+
+            transicionNivel.classList.add(
+                "visible"
+            );
+
+            setTimeout(() => {
+                transicionNivel.classList.remove(
+                    "visible"
+                );
+            }, 900);
+        }
+
+        async function seleccionarNivel(numeroNivel) {
+            if (bloqueado) {
+                return;
+            }
+
+            bloqueado = true;
+            limpiarMultimedia();
+
+            pantallaJuego.classList.remove(
+                "visible"
+            );
+
+            pantallaJuego.style.display = "none";
+            pantallaInicial.style.display = "flex";
+
+            reiniciarTarjetas();
+
+            let audioNivel = null;
+
+            if (numeroNivel === 1) {
+                audioNivel = reproducirAudio(
+                    "recursos/nivel1.mp3"
+                );
+            }
+
+            if (numeroNivel === 2) {
+                audioNivel = reproducirAudio(
+                    "recursos/nivel2.mp3"
+                );
+            }
+
+            if (numeroNivel === 3) {
+                audioNivel = reproducirAudio(
+                    "recursos/nivel3.mp3"
+                );
+            }
+
+            await animarSeleccionNivel(numeroNivel);
+
+            pantallaInicial.style.opacity = "0";
+            pantallaInicial.style.transform =
+                "scale(0.97)";
+
+            setTimeout(() => {
+                pantallaInicial.style.display =
+                    "none";
+
+                pantallaInicial.style.opacity = "1";
+                pantallaInicial.style.transform =
+                    "scale(1)";
+
+                pantallaJuego.style.display = "flex";
+
+                requestAnimationFrame(() => {
+                    pantallaJuego.classList.add(
+                        "visible"
+                    );
+                });
+
+                entrarAlNivel(numeroNivel);
+
+                bloqueado = false;
+                mantenerFoco();
+            }, 420);
+        }
+
+        function entrarAlNivel(numeroNivel) {
+            nivelActual = numeroNivel;
+
+            if (numeroNivel === 1) {
+                estado.textContent = "🦁 NIVEL 1";
+                pregunta.textContent =
+                    "Escanea un animal";
+
+                mostrarTransicion("NIVEL 1");
+                return;
+            }
+
+            if (numeroNivel === 2) {
+                estado.textContent = "❓ NIVEL 2";
+                pregunta.textContent =
+                    "Busca la tarjeta correcta";
+
+                mostrarTransicion("NIVEL 2");
+
+                setTimeout(() => {
+                    cargarPreguntaNivel2();
+                }, 900);
+
+                return;
+            }
+
+            estado.textContent = "🎵 NIVEL 3";
+            pregunta.textContent =
+                "Nivel 3 próximamente";
+
+            mostrarTransicion("NIVEL 3");
+        }
+
+        function cargarPreguntaNivel2() {
+            let nuevoIndice;
+
+            if (preguntasNivel2.length === 1) {
+                nuevoIndice = 0;
+            } else {
+                do {
+                    nuevoIndice =
+                        Math.floor(
+                            Math.random() *
+                            preguntasNivel2.length
+                        );
+                } while (
+                    nuevoIndice ===
+                    ultimoIndicePregunta
+                );
+            }
+
+            ultimoIndicePregunta = nuevoIndice;
+
+            preguntaActual =
+                preguntasNivel2[nuevoIndice];
+
+            estado.textContent = "❓ NIVEL 2";
+            pregunta.textContent =
+                preguntaActual.pregunta;
+        }
+
+        function mostrarAnimal(codigo) {
+            const animal = animales[codigo];
+
+            if (!animal || bloqueado) {
+                return;
+            }
+
+            bloqueado = true;
+
+            estado.textContent =
+                animal.emoji + " " + animal.nombre;
+
+            pregunta.textContent = "";
+
+            video.classList.remove("visible");
+            video.pause();
+
+            imagen.src = animal.imagen;
+            imagen.classList.remove("saliendo");
+
+            requestAnimationFrame(() => {
+                imagen.classList.add("visible");
+            });
+
+            const audioAnimal =
+                reproducirAudio(animal.audio);
+
+            let videoIniciado = false;
+
+            function iniciarVideoAnimal() {
+                if (videoIniciado) {
+                    return;
+                }
+
+                videoIniciado = true;
+
+                imagen.classList.add("saliendo");
+                imagen.classList.remove("visible");
+
+                setTimeout(() => {
+                    video.src = animal.video;
+                    video.load();
+
+                    video.play()
+                        .then(() => {
+                            video.classList.add(
+                                "visible"
+                            );
+                        })
+                        .catch(() => {
+                            finalizarAnimal();
+                        });
+                }, 500);
+            }
+
+            audioAnimal.onended =
+                iniciarVideoAnimal;
+
+            audioAnimal.onerror = () => {
+                setTimeout(
+                    iniciarVideoAnimal,
+                    800
+                );
+            };
+
+            /*
+            Respaldo por si el evento onended no se ejecuta.
+            */
+            setTimeout(() => {
+                if (!videoIniciado) {
+                    iniciarVideoAnimal();
+                }
+            }, 3500);
+
+            video.onended = finalizarAnimal;
+            video.onerror = finalizarAnimal;
+        }
+
+        function finalizarAnimal() {
+            video.classList.remove("visible");
+
+            setTimeout(() => {
+                video.pause();
+                video.currentTime = 0;
+
+                estado.textContent =
+                    "🦁 NIVEL 1";
+
+                pregunta.textContent =
+                    "Escanea otro animal";
+
+                bloqueado = false;
+                mantenerFoco();
+            }, 450);
+        }
+
+        function evaluarRespuestaNivel2(codigo) {
+            if (
+                bloqueado ||
+                !preguntaActual ||
+                !animales[codigo]
+            ) {
+                return;
+            }
+
+            bloqueado = true;
+
+            if (
+                codigo ===
+                preguntaActual.correcto
+            ) {
+                estado.textContent =
+                    "⭐ ¡Muy bien!";
+
+                pregunta.textContent =
+                    "Encontraste el animal";
+
+                const audioCorrecto =
+                    reproducirAudio(
+                        "recursos/correcto.mp3"
+                    );
+
+                let nuevaPreguntaCargada = false;
+
+                function siguientePregunta() {
+                    if (nuevaPreguntaCargada) {
+                        return;
+                    }
+
+                    nuevaPreguntaCargada = true;
+                    cargarPreguntaNivel2();
+                    bloqueado = false;
+                    mantenerFoco();
+                }
+
+                audioCorrecto.onended = () => {
+                    setTimeout(
+                        siguientePregunta,
+                        450
+                    );
+                };
+
+                audioCorrecto.onerror = () => {
+                    setTimeout(
+                        siguientePregunta,
+                        1600
+                    );
+                };
+
+                setTimeout(
+                    siguientePregunta,
+                    3200
+                );
+            } else {
+                estado.textContent =
+                    "💙 Inténtalo otra vez";
+
+                pregunta.textContent =
+                    preguntaActual.pregunta;
+
+                const audioIncorrecto =
+                    reproducirAudio(
+                        "recursos/incorrecto.mp3"
+                    );
+
+                let desbloqueado = false;
+
+                function permitirNuevoIntento() {
+                    if (desbloqueado) {
+                        return;
+                    }
+
+                    desbloqueado = true;
+
+                    estado.textContent =
+                        "❓ NIVEL 2";
+
+                    pregunta.textContent =
+                        preguntaActual.pregunta;
+
+                    bloqueado = false;
+                    mantenerFoco();
+                }
+
+                audioIncorrecto.onended =
+                    permitirNuevoIntento;
+
+                audioIncorrecto.onerror = () => {
+                    setTimeout(
+                        permitirNuevoIntento,
+                        1400
+                    );
+                };
+
+                setTimeout(
+                    permitirNuevoIntento,
+                    3200
+                );
+            }
+        }
+
+        function procesarCodigo(codigo) {
+            if (!codigo || bloqueado) {
+                return;
+            }
+
+            if (codigo === "NIVEL1") {
+                seleccionarNivel(1);
+                return;
+            }
+
+            if (codigo === "NIVEL2") {
+                seleccionarNivel(2);
+                return;
+            }
+
+            if (codigo === "NIVEL3") {
+                seleccionarNivel(3);
+                return;
+            }
+
+            if (nivelActual === 1) {
+                mostrarAnimal(codigo);
+                return;
+            }
+
+            if (nivelActual === 2) {
+                evaluarRespuestaNivel2(codigo);
+            }
+        }
+
+        entradaCodigo.addEventListener(
+            "keydown",
+            function(evento) {
+                if (evento.key !== "Enter") {
+                    return;
+                }
+
+                evento.preventDefault();
+
+                const codigo =
+                    entradaCodigo.value
+                        .trim()
+                        .toUpperCase();
+
+                entradaCodigo.value = "";
+
+                procesarCodigo(codigo);
+            }
         );
 
-        estado.innerHTML=
-        "✅ Muy bien";
-
-        setTimeout(()=>{
-
-            estado.innerHTML=
-            "NIVEL 2";
-
-            cargarPregunta();
-
-        },2000);
-
-    }
-    else
-    {
-
-        reproducirAudio(
-            "recursos/incorrecto.mp3"
+        /*
+        Mantiene disponible el lector incluso si se hace clic
+        accidentalmente en otra parte de la pantalla.
+        */
+        document.addEventListener(
+            "click",
+            mantenerFoco
         );
 
-        estado.innerHTML=
-        "❌ Inténtalo otra vez";
+        window.addEventListener(
+            "focus",
+            mantenerFoco
+        );
 
-    }
-
-}
-
-document
-.getElementById("codigo")
-.addEventListener(
-"keydown",
-function(event){
-
-if(event.key!=="Enter")
-return;
-
-if(bloqueado)
-{
-    this.value="";
-    return;
-}
-
-let codigo=
-this.value
-.trim()
-.toUpperCase();
-
-this.value="";
-
-if(codigo==="NIVEL1")
-{
-    iniciarNivel1();
-    return;
-}
-
-if(codigo==="NIVEL2")
-{
-    iniciarNivel2();
-    return;
-}
-
-if(codigo==="NIVEL3")
-{
-    estado.innerHTML=
-    "Nivel 3 próximamente";
-
-    reproducirAudio(
-    "recursos/nivel3.mp3"
-    );
-
-    return;
-}
-
-if(nivelActual===1)
-{
-    mostrarAnimal(codigo);
-    return;
-}
-
-if(nivelActual===2)
-{
-    evaluarPregunta(codigo);
-}
-
-});
-
-window.onload=function(){
-
-    estado.innerHTML=
-    "ESCANEA NIVEL1 O NIVEL2";
-
-};
-
-</script>
-
+        window.addEventListener(
+            "load",
+            () => {
+                seleccionarFondoAleatorio();
+                mantenerFoco();
+            }
+        );
+    </script>
 </body>
 </html>
