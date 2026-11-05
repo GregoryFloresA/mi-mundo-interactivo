@@ -93,42 +93,52 @@ document
 
 });
 
-function procesarCodigo(codigo){
+function procesarCodigo(codigo)
+{
 
-    let resultado=
+    let resultado =
         document.getElementById("resultado");
+
+    let imagen =
+        document.getElementById("imagenAnimal");
+
+    let video =
+        document.getElementById("videoAnimal");
 
     if(codigo==="ANI001")
     {
+
         resultado.innerHTML="🦁 León";
+
+        imagen.src="recursos/leon.jpg";
+        imagen.style.display="block";
+
+        video.style.display="none";
+
+        let audio =
+            new Audio("recursos/leon.mp3");
+
+        audio.play();
+
+        audio.onended = function()
+        {
+
+            video.src=
+                "recursos/leon.mp4";
+
+            video.style.display=
+                "block";
+
+            video.play();
+
+        };
+
         return;
     }
 
-    if(codigo==="ANI002")
-    {
-        resultado.innerHTML="🐘 Elefante";
-        return;
-    }
+    resultado.innerHTML=
+        "❌ Código no encontrado";
 
-    if(codigo==="ANI003")
-    {
-        resultado.innerHTML="🐶 Perro";
-        return;
-    }
-
-    if(codigo==="ANI004")
-    {
-        resultado.innerHTML="🐱 Gato";
-        return;
-    }
-
-    if(codigo==="ANI005")
-    {
-        resultado.innerHTML="🐮 Vaca";
-        return;
-    }
-
-    resultado.innerHTML="❌ Código no encontrado";
 }
 
 </script>
