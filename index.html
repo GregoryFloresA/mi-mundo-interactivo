@@ -1350,12 +1350,28 @@
             video.classList.remove("visible");
             video.pause();
 
-            imagen.src = animal.imagen;
-            imagen.classList.remove("saliendo");
+            imagen.classList.remove(
+    "visible",
+    "saliendo"
+);
 
-            requestAnimationFrame(() => {
-                imagen.classList.add("visible");
-            });
+imagen.removeAttribute("src");
+
+setTimeout(() => {
+
+    imagen.onload = function(){
+
+        imagen.classList.add(
+            "visible"
+        );
+
+    };
+
+    imagen.src =
+        animal.imagen;
+
+}, 50);
+
 
             const audioAnimal =
                 reproducirAudio(animal.audio);
