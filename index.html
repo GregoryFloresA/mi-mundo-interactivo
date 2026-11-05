@@ -8,138 +8,382 @@
 <style>
 
 body{
-    background:#F5F8FA;
-    font-family:Arial, sans-serif;
+    background:#f5f8fa;
+    font-family:Arial,sans-serif;
     text-align:center;
     margin:0;
-    padding:40px;
+    padding:20px;
 }
 
 h1{
     color:#2c3e50;
 }
 
-input{
-    font-size:24px;
+#codigo{
+    font-size:28px;
     padding:10px;
-    width:300px;
+    width:350px;
     text-transform:uppercase;
 }
 
-#resultado{
-    margin-top:30px;
-    font-size:36px;
+#estado{
+    margin-top:20px;
+    font-size:40px;
+    font-weight:bold;
+    color:#2c3e50;
+}
+
+#pregunta{
+    margin-top:20px;
+    font-size:34px;
+    color:#0066cc;
     font-weight:bold;
 }
 
-</style>
+#imagenAnimal{
+    max-width:900px;
+    max-height:600px;
+    border-radius:15px;
+    display:none;
+    margin-top:20px;
+}
 
+#videoAnimal{
+    max-width:900px;
+    max-height:600px;
+    border-radius:15px;
+    display:none;
+    margin-top:20px;
+}
+
+</style>
 </head>
 
 <body>
 
 <h1>Mi Mundo Interactivo</h1>
 
-<p>Escanea una tarjeta o escribe un código</p>
-
 <input
     id="codigo"
     type="text"
     autofocus
-    placeholder="ANI001">
+    placeholder="Escanea una tarjeta">
 
-<div id="resultado"></div>
+<div id="estado"></div>
 
-<br>
+<div id="pregunta"></div>
 
-<img
-    id="imagenAnimal"
-    style="
-        max-width:600px;
-        display:none;
-        border-radius:15px;
-    ">
+<img id="imagenAnimal">
 
-<br><br>
-
-<video
-    id="videoAnimal"
-    controls
-    style="
-        max-width:800px;
-        display:none;
-    ">
-</video>
+<video id="videoAnimal"></video>
 
 <script>
 
-document
-.getElementById("codigo")
-.addEventListener("keydown",function(event){
+let nivelActual = 0;
+let preguntaActual = null;
 
-    if(event.key==="Enter")
-    {
+const animales = {
 
-        let codigo=
-        this.value
-        .trim()
-        .toUpperCase();
+    "ANI001":{
+        nombre:"León",
+        emoji:"🦁",
+        imagen:"recursos/leon.jpg",
+        audio:"recursos/leon.mp3",
+        video:"recursos/leon.mp4"
+    },
 
-        procesarCodigo(codigo);
+    "ANI002":{
+        nombre:"Elefante",
+        emoji:"🐘",
+        imagen:"recursos/elefante.jpg",
+        audio:"recursos/elefante.mp3",
+        video:"recursos/elefante.mp4"
+    },
 
-        this.value="";
+    "ANI003":{
+        nombre:"Perro",
+        emoji:"🐶",
+        imagen:"recursos/perro.jpg",
+        audio:"recursos/perro.mp3",
+        video:"recursos/perro.mp4"
+    },
 
+    "ANI004":{
+        nombre:"Gato",
+        emoji:"🐱",
+        imagen:"recursos/gato.jpg",
+        audio:"recursos/gato.mp3",
+        video:"recursos/gato.mp4"
+    },
+
+    "ANI005":{
+        nombre:"Vaca",
+        emoji:"🐮",
+        imagen:"recursos/vaca.jpg",
+        audio:"recursos/vaca.mp3",
+        video:"recursos/vaca.mp4"
     }
 
-});
+};
 
-function procesarCodigo(codigo)
+const preguntas = [
+
+{
+pregunta:"¿Dónde está el león?",
+correcto:"ANI001"
+},
+
+{
+pregunta:"¿Dónde está el elefante?",
+correcto:"ANI002"
+},
+
+{
+pregunta:"¿Dónde está el perro?",
+correcto:"ANI003"
+},
+
+{
+pregunta:"¿Dónde está el gato?",
+correcto:"ANI004"
+},
+
+{
+pregunta:"¿Dónde está la vaca?",
+correcto:"ANI005"
+}
+
+];
+
+const estado =
+document.getElementById("estado");
+
+const pregunta =
+document.getElementById("pregunta");
+
+const imagen =
+document.getElementById("imagenAnimal");
+
+const video =
+document.getElementById("videoAnimal");
+
+function reproducirAudio(archivo)
+{
+    let a = new Audio(archivo);
+    a.play();
+    return a;
+}
+
+function bienvenida()
 {
 
-    let resultado =
-        document.getElementById("resultado");
+    estado.innerHTML="Bienvenido";
 
-    let imagen =
-        document.getElementById("imagenAnimal");
+    video.src="recursos/bienvenida.mp4";
 
-    let video =
-        document.getElementById("videoAnimal");
+    video.style.display="block";
 
-    if(codigo==="ANI001")
-    {
+    video.play();
 
-        resultado.innerHTML="🦁 León";
-
-        imagen.src="recursos/leon.jpg";
-        imagen.style.display="block";
+    video.onended=function(){
 
         video.style.display="none";
 
-        let audio =
-            new Audio("recursos/leon.mp3");
+        mostrarEsperaNivel();
 
-        audio.play();
+    };
+}
 
-        audio.onended = function()
-        {
+function mostrarEsperaNivel()
+{
+    estado.innerHTML="ESCANEA UN NIVEL";
 
-            video.src=
-                "recursos/leon.mp4";
+    pregunta.innerHTML="";
 
-            video.style.display=
-                "block";
+    reproducirAudio("recursos/escanea.mp3");
+}
 
-            video.play();
+function iniciarNivel1()
+{
+    nivelActual=1;
 
-        };
+    estado.innerHTML="NIVEL 1";
 
-        return;
-    }
+    pregunta.innerHTML="Explora los animales";
 
-    resultado.innerHTML=
-        "❌ Código no encontrado";
+    reproducirAudio("recursos/nivel1.mp3");
+}
+
+function iniciarNivel2()
+{
+    nivelActual=2;
+
+    estado.innerHTML="NIVEL 2";
+
+    reproducirAudio("recursos/nivel2.mp3");
+
+    setTimeout(() => {
+
+        cargarPregunta();
+
+    },1500);
 
 }
+
+function cargarPregunta()
+{
+    let indice =
+    Math.floor(
+        Math.random()*preguntas.length
+    );
+
+    preguntaActual=
+        preguntas[indice];
+
+    pregunta.innerHTML=
+        preguntaActual.pregunta;
+}
+
+function mostrarAnimal(codigo)
+{
+    let animal=animales[codigo];
+
+    if(!animal)return;
+
+    estado.innerHTML=
+        animal.emoji + " " + animal.nombre;
+
+    imagen.src=animal.imagen;
+
+    imagen.style.display="block";
+
+    video.style.display="none";
+
+    let audio =
+        reproducirAudio(animal.audio);
+
+    audio.onended=function(){
+
+        imagen.style.display="none";
+
+        video.src=animal.video;
+
+        video.style.display="block";
+
+        video.play();
+
+    };
+
+    video.onended=function(){
+
+        video.style.display="none";
+
+        estado.innerHTML="";
+
+        if(nivelActual===1)
+        {
+            pregunta.innerHTML=
+            "Escanea otro animal";
+        }
+
+    };
+
+}
+
+function evaluarPregunta(codigo)
+{
+
+    if(!preguntaActual)return;
+
+    if(codigo===preguntaActual.correcto)
+    {
+
+        reproducirAudio(
+            "recursos/correcto.mp3"
+        );
+
+        estado.innerHTML=
+            "✅ Muy bien";
+
+        setTimeout(() => {
+
+            cargarPregunta();
+
+            estado.innerHTML=
+                "NIVEL 2";
+
+        },2000);
+
+    }
+    else
+    {
+
+        reproducirAudio(
+            "recursos/incorrecto.mp3"
+        );
+
+        estado.innerHTML=
+            "❌ Inténtalo de nuevo";
+
+    }
+
+}
+
+document
+.getElementById("codigo")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter")
+{
+
+let codigo=
+this.value
+.trim()
+.toUpperCase();
+
+this.value="";
+
+if(codigo==="NIVEL1")
+{
+    iniciarNivel1();
+    return;
+}
+
+if(codigo==="NIVEL2")
+{
+    iniciarNivel2();
+    return;
+}
+
+if(codigo==="NIVEL3")
+{
+    estado.innerHTML=
+    "Nivel 3 próximamente";
+
+    reproducirAudio(
+        "recursos/nivel3.mp3"
+    );
+
+    return;
+}
+
+if(nivelActual===1)
+{
+    mostrarAnimal(codigo);
+    return;
+}
+
+if(nivelActual===2)
+{
+    evaluarPregunta(codigo);
+}
+
+}
+});
+
+bienvenida();
 
 </script>
 
