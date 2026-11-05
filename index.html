@@ -9,50 +9,201 @@
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
 body{
-    background:#f5f8fa;
-    font-family:Arial,sans-serif;
-    text-align:center;
+
     margin:0;
     padding:20px;
+
+    min-height:100vh;
+
+    font-family:Arial,sans-serif;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        135deg,
+        #dff6ff,
+        #eef9ff,
+        #ffffff
+    );
+
+}
+
+/* Fondo animado */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+
+    radial-gradient(
+        circle,
+        rgba(0,180,255,0.08) 0%,
+        transparent 20%
+    ),
+
+    radial-gradient(
+        circle,
+        rgba(0,120,255,0.08) 0%,
+        transparent 20%
+    );
+
+    background-size:
+    400px 400px,
+    600px 600px;
+
+    animation:
+    moverFondo 30s linear infinite;
+
+    z-index:-1;
+
+}
+
+@keyframes moverFondo{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(-150px,-100px);
+    }
+
 }
 
 h1{
-    color:#2c3e50;
+
+    color:#1f4b99;
+
+    font-size:48px;
+
+    margin-bottom:10px;
+
 }
 
 #codigo{
+
+    width:450px;
+
+    max-width:90vw;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:30px;
+
     font-size:28px;
-    padding:10px;
-    width:350px;
-    text-transform:uppercase;
+
+    text-align:center;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.15);
+
+    outline:none;
+
 }
+
+/* Estado */
 
 #estado{
-    margin-top:20px;
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:15px 35px;
+
+    border-radius:30px;
+
+    background:white;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.1);
+
     font-size:40px;
+
     font-weight:bold;
+
+    color:#2854a3;
+
 }
+
+/* Preguntas */
 
 #pregunta{
+
+    display:inline-block;
+
     margin-top:20px;
+
+    padding:15px 35px;
+
+    background:#fff4d6;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.08);
+
     font-size:30px;
-    color:#0066cc;
+
+    color:#7c5600;
+
     font-weight:bold;
+
 }
+
+/* Imagen */
 
 #imagenAnimal{
-    max-width:900px;
-    max-height:600px;
-    border-radius:15px;
+
+    margin-top:20px;
+
+    max-width:90vw;
+
+    max-height:65vh;
+
     display:none;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.20);
+
 }
 
+/* Video */
+
 #videoAnimal{
-    max-width:900px;
-    max-height:600px;
-    border-radius:15px;
+
+    margin-top:20px;
+
+    max-width:90vw;
+
+    max-height:65vh;
+
     display:none;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.20);
+
 }
 
 </style>
