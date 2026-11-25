@@ -1488,34 +1488,56 @@ var animales = {
    PREGUNTAS NIVEL 2
 ========================================================= */
 
-var preguntasNivel2 = [
+var preguntasNivel2 = [];
 
-    {
-        pregunta:"¿Dónde está el león?",
-        correcto:"ANI001"
-    },
+function generarPreguntasNivel2(){
 
-    {
-        pregunta:"¿Dónde está el elefante?",
-        correcto:"ANI002"
-    },
+    preguntasNivel2 = [];
 
-    {
-        pregunta:"¿Dónde está el perro?",
-        correcto:"ANI003"
-    },
+    for(var codigo in animales){
 
-    {
-        pregunta:"¿Dónde está el gato?",
-        correcto:"ANI004"
-    },
+        if(animales.hasOwnProperty(codigo)){
 
-    {
-        pregunta:"¿Dónde está la vaca?",
-        correcto:"ANI005"
+            preguntasNivel2.push({
+                pregunta:
+                    "¿Dónde está " +
+                    obtenerArticulo(animales[codigo].nombre) +
+                    animales[codigo].nombre.toLowerCase() +
+                    "?",
+                correcto:codigo
+            });
+
+        }
+
     }
 
-];
+}
+
+function obtenerArticulo(nombre){
+
+    var femeninos = {
+        "Vaca":true,
+        "Oveja":true,
+        "Mariposa":true,
+        "Abeja":true,
+        "Mariquita":true,
+        "Rana":true,
+        "Salamandra":true,
+        "Ballena":true,
+        "Jirafa":true,
+        "Cebra":true,
+        "Tortuga":true,
+        "Águila":true,
+        "Serpiente":true
+    };
+
+    if(femeninos[nombre]){
+        return "la ";
+    }
+
+    return "el ";
+
+}
 
 
 /* =========================================================
