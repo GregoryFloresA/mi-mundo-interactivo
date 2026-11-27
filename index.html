@@ -11,7 +11,7 @@
 >
 
 <title>Mi Mundo Interactivo</title>
-<!-- Version corregida: audio opcional y modo de prueba -->
+<!-- Versión: menú, colecciones y 80 animales -->
 
 <style>
 
@@ -976,28 +976,151 @@ body.tema-aves #fondoAves{
 }
 
 
+
+/* =========================================================
+   MENÚ GENERAL Y COLECCIONES
+========================================================= */
+
+#pantallaMenu,
+#pantallaColecciones{
+    display:none;
+    width:100%;
+    height:100%;
+    padding:clamp(18px,3vh,38px) clamp(18px,5vw,85px);
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+#pantallaMenu.visible,
+#pantallaColecciones.visible{
+    display:flex;
+}
+
+.titulo-pantalla{
+    padding:clamp(16px,2.4vh,26px) clamp(30px,5vw,76px);
+    border-radius:38px;
+    background:rgba(255,255,255,0.96);
+    color:#ed765f;
+    font-size:clamp(31px,4.6vw,66px);
+    font-weight:900;
+    box-shadow:var(--sombra);
+}
+
+.subtitulo-pantalla{
+    margin-top:22px;
+    padding:12px 30px;
+    border-radius:30px;
+    background:rgba(255,255,255,0.93);
+    color:#6686cc;
+    font-size:clamp(21px,2.7vw,37px);
+    font-weight:900;
+    box-shadow:var(--sombra-suave);
+}
+
+.grilla-menu{
+    width:min(1250px,94vw);
+    margin-top:clamp(28px,5vh,58px);
+    display:grid;
+    grid-template-columns:repeat(2,minmax(280px,1fr));
+    gap:clamp(22px,3vw,42px);
+}
+
+.tarjeta-tema,
+.tarjeta-coleccion{
+    min-height:180px;
+    padding:24px;
+    border-radius:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    color:white;
+    font-weight:900;
+    text-align:center;
+    box-shadow:0 20px 42px rgba(48,65,126,0.22), inset 0 5px 12px rgba(255,255,255,0.36);
+}
+
+.tarjeta-tema .icono,
+.tarjeta-coleccion .icono{
+    font-size:clamp(52px,6vw,92px);
+    line-height:1;
+}
+
+.tarjeta-tema .nombre,
+.tarjeta-coleccion .nombre{
+    margin-top:12px;
+    font-size:clamp(24px,3vw,42px);
+    text-shadow:0 4px 4px rgba(48,48,80,0.18);
+}
+
+.tema-animales{background:linear-gradient(150deg,#7fd39f,#4bad82);}
+.tema-vegetal{background:linear-gradient(150deg,#a8db73,#5caf66);}
+.tema-familia{background:linear-gradient(150deg,#ef9db4,#d96f95);}
+.tema-cotidiano{background:linear-gradient(150deg,#80c4ed,#5b8fd0);}
+
+.grilla-colecciones{
+    width:min(1360px,96vw);
+    margin-top:clamp(24px,4vh,45px);
+    display:grid;
+    grid-template-columns:repeat(3,minmax(240px,1fr));
+    gap:clamp(16px,2vw,28px);
+}
+
+.tarjeta-coleccion{
+    min-height:160px;
+}
+
+.c1{background:linear-gradient(150deg,#e1b06e,#c68449);}
+.c2{background:linear-gradient(150deg,#7fce83,#479d69);}
+.c3{background:linear-gradient(150deg,#96c9ef,#638fd0);}
+.c4{background:linear-gradient(150deg,#69d4db,#398bbb);}
+.c5{background:linear-gradient(150deg,#d9a2df,#a66ab7);}
+.c6{background:linear-gradient(150deg,#ef8c6f,#c9534c);}
+
+#avisoProximamente{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:200;
+    align-items:center;
+    justify-content:center;
+    background:rgba(35,47,75,0.45);
+}
+
+#avisoProximamente.visible{display:flex;}
+
+#avisoProximamente .caja{
+    max-width:80vw;
+    padding:40px 70px;
+    border-radius:44px;
+    background:white;
+    color:#6686cc;
+    font-size:clamp(32px,5vw,72px);
+    font-weight:900;
+    box-shadow:var(--sombra);
+}
+
 #codigo.modo-prueba{
     top:auto;
     bottom:20px;
     left:50%;
     transform:translateX(-50%);
-    width:380px;
+    width:390px;
     height:58px;
     padding:10px 20px;
-    border:3px solid #ffffff;
+    border:3px solid #fff;
     border-radius:30px;
     background:rgba(255,255,255,0.96);
     color:#445278;
-    font-size:25px;
+    font-size:24px;
     font-weight:bold;
     text-align:center;
     text-transform:uppercase;
     box-shadow:0 10px 30px rgba(48,65,126,0.28);
-    outline:none;
     opacity:1;
     z-index:9999;
 }
-
 
 /* =========================================================
    RESPONSIVE
@@ -1171,6 +1294,31 @@ body.tema-aves #fondoAves{
     </section>
 
 
+
+    <section id="pantallaMenu">
+        <div class="titulo-pantalla">¿Qué vamos a explorar?</div>
+        <div class="subtitulo-pantalla">Escanea una tarjeta de tema</div>
+        <div class="grilla-menu">
+            <article class="tarjeta-tema tema-animales"><div class="icono">🦁</div><div class="nombre">REINO ANIMAL</div></article>
+            <article class="tarjeta-tema tema-vegetal"><div class="icono">🌱</div><div class="nombre">MUNDO VEGETAL</div></article>
+            <article class="tarjeta-tema tema-familia"><div class="icono">🏡</div><div class="nombre">MI FAMILIA</div></article>
+            <article class="tarjeta-tema tema-cotidiano"><div class="icono">🚗</div><div class="nombre">MI MUNDO COTIDIANO</div></article>
+        </div>
+    </section>
+
+    <section id="pantallaColecciones">
+        <div class="titulo-pantalla">Reino Animal</div>
+        <div class="subtitulo-pantalla">Escanea una colección</div>
+        <div class="grilla-colecciones">
+            <article class="tarjeta-coleccion c1"><div class="icono">🐄</div><div class="nombre">DOMÉSTICOS Y GRANJA</div></article>
+            <article class="tarjeta-coleccion c2"><div class="icono">🦁</div><div class="nombre">SALVAJES</div></article>
+            <article class="tarjeta-coleccion c3"><div class="icono">🐦</div><div class="nombre">AVES</div></article>
+            <article class="tarjeta-coleccion c4"><div class="icono">🐋</div><div class="nombre">ACUÁTICOS</div></article>
+            <article class="tarjeta-coleccion c5"><div class="icono">🦋</div><div class="nombre">PEQUEÑOS ANIMALES</div></article>
+            <article class="tarjeta-coleccion c6"><div class="icono">🦖</div><div class="nombre">PREHISTÓRICOS</div></article>
+        </div>
+    </section>
+
     <section id="pantallaJuego">
 
         <div id="estado">
@@ -1210,6 +1358,8 @@ body.tema-aves #fondoAves{
 </section>
 
 
+<div id="avisoProximamente"><div class="caja" id="textoProximamente">Próximamente</div></div>
+
 <!-- Input compatible con lector USB -->
 
 <input
@@ -1228,6 +1378,8 @@ body.tema-aves #fondoAves{
 ========================================================= */
 
 var nivelActual = 0;
+var coleccionActual = 0;
+var areaActual = "animal";
 var preguntaActual = null;
 var bloqueado = false;
 var ultimoIndicePregunta = -1;
@@ -1244,261 +1396,165 @@ var temporizadorRespaldo = null;
 
 var animales = {
 
-    "ANI001":{
-        nombre:"León",
-        emoji:"🦁",
-        imagen:"recursos/animales/ANI001-leon/leon.jpg",
-        audio:"recursos/animales/ANI001-leon/leon.mp3",
-        video:"recursos/animales/ANI001-leon/leon.mp4"
-    },
+    "ANI001":{nombre:"León",emoji:"🦁",coleccion:2,imagen:"recursos/animales/ANI001-leon/leon.jpg",audio:"recursos/animales/ANI001-leon/leon.mp3",video:"recursos/animales/ANI001-leon/leon.mp4"},
 
-    "ANI002":{
-        nombre:"Elefante",
-        emoji:"🐘",
-        imagen:"recursos/animales/ANI002-elefante/elefante.jpg",
-        audio:"recursos/animales/ANI002-elefante/elefante.mp3",
-        video:"recursos/animales/ANI002-elefante/elefante.mp4"
-    },
+    "ANI002":{nombre:"Elefante",emoji:"🐘",coleccion:2,imagen:"recursos/animales/ANI002-elefante/elefante.jpg",audio:"recursos/animales/ANI002-elefante/elefante.mp3",video:"recursos/animales/ANI002-elefante/elefante.mp4"},
 
-    "ANI003":{
-        nombre:"Perro",
-        emoji:"🐶",
-        imagen:"recursos/animales/ANI003-perro/perro.jpg",
-        audio:"recursos/animales/ANI003-perro/perro.mp3",
-        video:"recursos/animales/ANI003-perro/perro.mp4"
-    },
+    "ANI003":{nombre:"Perro",emoji:"🐶",coleccion:1,imagen:"recursos/animales/ANI003-perro/perro.jpg",audio:"recursos/animales/ANI003-perro/perro.mp3",video:"recursos/animales/ANI003-perro/perro.mp4"},
 
-    "ANI004":{
-        nombre:"Gato",
-        emoji:"🐱",
-        imagen:"recursos/animales/ANI004-gato/gato.jpg",
-        audio:"recursos/animales/ANI004-gato/gato.mp3",
-        video:"recursos/animales/ANI004-gato/gato.mp4"
-    },
+    "ANI004":{nombre:"Gato",emoji:"🐱",coleccion:1,imagen:"recursos/animales/ANI004-gato/gato.jpg",audio:"recursos/animales/ANI004-gato/gato.mp3",video:"recursos/animales/ANI004-gato/gato.mp4"},
 
-    "ANI005":{
-        nombre:"Vaca",
-        emoji:"🐮",
-        imagen:"recursos/animales/ANI005-vaca/vaca.jpg",
-        audio:"recursos/animales/ANI005-vaca/vaca.mp3",
-        video:"recursos/animales/ANI005-vaca/vaca.mp4"
-    },
+    "ANI005":{nombre:"Vaca",emoji:"🐮",coleccion:1,imagen:"recursos/animales/ANI005-vaca/vaca.jpg",audio:"recursos/animales/ANI005-vaca/vaca.mp3",video:"recursos/animales/ANI005-vaca/vaca.mp4"},
 
-    "ANI006":{
-        nombre:"Caballo",
-        emoji:"🐴",
-        imagen:"recursos/animales/ANI006-caballo/caballo.jpg",
-        audio:"recursos/animales/ANI006-caballo/caballo.mp3",
-        video:"recursos/animales/ANI006-caballo/caballo.mp4"
-    },
+    "ANI006":{nombre:"Caballo",emoji:"🐴",coleccion:1,imagen:"recursos/animales/ANI006-caballo/caballo.jpg",audio:"recursos/animales/ANI006-caballo/caballo.mp3",video:"recursos/animales/ANI006-caballo/caballo.mp4"},
 
-    "ANI007":{
-        nombre:"Mono",
-        emoji:"🐵",
-        imagen:"recursos/animales/ANI007-mono/mono.jpg",
-        audio:"recursos/animales/ANI007-mono/mono.mp3",
-        video:"recursos/animales/ANI007-mono/mono.mp4"
-    },
+    "ANI007":{nombre:"Mono",emoji:"🐵",coleccion:2,imagen:"recursos/animales/ANI007-mono/mono.jpg",audio:"recursos/animales/ANI007-mono/mono.mp3",video:"recursos/animales/ANI007-mono/mono.mp4"},
 
-    "ANI008":{
-        nombre:"Oveja",
-        emoji:"🐑",
-        imagen:"recursos/animales/ANI008-oveja/oveja.jpg",
-        audio:"recursos/animales/ANI008-oveja/oveja.mp3",
-        video:"recursos/animales/ANI008-oveja/oveja.mp4"
-    },
+    "ANI008":{nombre:"Oveja",emoji:"🐑",coleccion:1,imagen:"recursos/animales/ANI008-oveja/oveja.jpg",audio:"recursos/animales/ANI008-oveja/oveja.mp3",video:"recursos/animales/ANI008-oveja/oveja.mp4"},
 
-    "ANI009":{
-    nombre:"Gallo",
-    emoji:"🐓",
-    imagen:"recursos/animales/ANI009-gallo/gallo.jpg",
-    audio:"recursos/animales/ANI009-gallo/gallo.mp3",
-    video:"recursos/animales/ANI009-gallo/gallo.mp4"
-    },
+    "ANI009":{nombre:"Gallo",emoji:"🐓",coleccion:3,imagen:"recursos/animales/ANI009-gallo/gallo.jpg",audio:"recursos/animales/ANI009-gallo/gallo.mp3",video:"recursos/animales/ANI009-gallo/gallo.mp4"},
 
-    "ANI010":{
-        nombre:"Pato",
-        emoji:"🦆",
-        imagen:"recursos/animales/ANI010-pato/pato.jpg",
-        audio:"recursos/animales/ANI010-pato/pato.mp3",
-        video:"recursos/animales/ANI010-pato/pato.mp4"
-    },
+    "ANI010":{nombre:"Pato",emoji:"🦆",coleccion:3,imagen:"recursos/animales/ANI010-pato/pato.jpg",audio:"recursos/animales/ANI010-pato/pato.mp3",video:"recursos/animales/ANI010-pato/pato.mp4"},
 
-    "ANI011":{
-        nombre:"Búho",
-        emoji:"🦉",
-        imagen:"recursos/animales/ANI011-buho/buho.jpg",
-        audio:"recursos/animales/ANI011-buho/buho.mp3",
-        video:"recursos/animales/ANI011-buho/buho.mp4"
-    },
+    "ANI011":{nombre:"Búho",emoji:"🦉",coleccion:3,imagen:"recursos/animales/ANI011-buho/buho.jpg",audio:"recursos/animales/ANI011-buho/buho.mp3",video:"recursos/animales/ANI011-buho/buho.mp4"},
 
-    "ANI012":{
-        nombre:"Pingüino",
-        emoji:"🐧",
-        imagen:"recursos/animales/ANI012-pinguino/pinguino.jpg",
-        audio:"recursos/animales/ANI012-pinguino/pinguino.mp3",
-        video:"recursos/animales/ANI012-pinguino/pinguino.mp4"
-    },
+    "ANI012":{nombre:"Pingüino",emoji:"🐧",coleccion:3,imagen:"recursos/animales/ANI012-pinguino/pinguino.jpg",audio:"recursos/animales/ANI012-pinguino/pinguino.mp3",video:"recursos/animales/ANI012-pinguino/pinguino.mp4"},
 
-    "ANI013":{
-        nombre:"Pez payaso",
-        emoji:"🐠",
-        imagen:"recursos/animales/ANI013-pezpayaso/pezpayaso.jpg",
-        audio:"recursos/animales/ANI013-pezpayaso/pezpayaso.mp3",
-        video:"recursos/animales/ANI013-pezpayaso/pezpayaso.mp4"
-    },
+    "ANI013":{nombre:"Pez payaso",emoji:"🐠",coleccion:4,imagen:"recursos/animales/ANI013-pezpayaso/pezpayaso.jpg",audio:"recursos/animales/ANI013-pezpayaso/pezpayaso.mp3",video:"recursos/animales/ANI013-pezpayaso/pezpayaso.mp4"},
 
-    "ANI014":{
-        nombre:"Tiburón",
-        emoji:"🦈",
-        imagen:"recursos/animales/ANI014-tiburon/tiburon.jpg",
-        audio:"recursos/animales/ANI014-tiburon/tiburon.mp3",
-        video:"recursos/animales/ANI014-tiburon/tiburon.mp4"
-    },
+    "ANI014":{nombre:"Tiburón",emoji:"🦈",coleccion:4,imagen:"recursos/animales/ANI014-tiburon/tiburon.jpg",audio:"recursos/animales/ANI014-tiburon/tiburon.mp3",video:"recursos/animales/ANI014-tiburon/tiburon.mp4"},
 
-    "ANI015":{
-        nombre:"Delfín",
-        emoji:"🐬",
-        imagen:"recursos/animales/ANI015-delfin/delfin.jpg",
-        audio:"recursos/animales/ANI015-delfin/delfin.mp3",
-        video:"recursos/animales/ANI015-delfin/delfin.mp4"
-    },
+    "ANI015":{nombre:"Delfín",emoji:"🐬",coleccion:4,imagen:"recursos/animales/ANI015-delfin/delfin.jpg",audio:"recursos/animales/ANI015-delfin/delfin.mp3",video:"recursos/animales/ANI015-delfin/delfin.mp4"},
 
-    "ANI016":{
-        nombre:"Mariposa",
-        emoji:"🦋",
-        imagen:"recursos/animales/ANI016-mariposa/mariposa.jpg",
-        audio:"recursos/animales/ANI016-mariposa/mariposa.mp3",
-        video:"recursos/animales/ANI016-mariposa/mariposa.mp4"
-    },
+    "ANI016":{nombre:"Mariposa",emoji:"🦋",coleccion:5,imagen:"recursos/animales/ANI016-mariposa/mariposa.jpg",audio:"recursos/animales/ANI016-mariposa/mariposa.mp3",video:"recursos/animales/ANI016-mariposa/mariposa.mp4"},
 
-    "ANI017":{
-        nombre:"Abeja",
-        emoji:"🐝",
-        imagen:"recursos/animales/ANI017-abeja/abeja.jpg",
-        audio:"recursos/animales/ANI017-abeja/abeja.mp3",
-        video:"recursos/animales/ANI017-abeja/abeja.mp4"
-    },
+    "ANI017":{nombre:"Abeja",emoji:"🐝",coleccion:5,imagen:"recursos/animales/ANI017-abeja/abeja.jpg",audio:"recursos/animales/ANI017-abeja/abeja.mp3",video:"recursos/animales/ANI017-abeja/abeja.mp4"},
 
-    "ANI018":{
-        nombre:"Mariquita",
-        emoji:"🐞",
-        imagen:"recursos/animales/ANI018-mariquita/mariquita.jpg",
-        audio:"recursos/animales/ANI018-mariquita/mariquita.mp3",
-        video:"recursos/animales/ANI018-mariquita/mariquita.mp4"
-    },
+    "ANI018":{nombre:"Mariquita",emoji:"🐞",coleccion:5,imagen:"recursos/animales/ANI018-mariquita/mariquita.jpg",audio:"recursos/animales/ANI018-mariquita/mariquita.mp3",video:"recursos/animales/ANI018-mariquita/mariquita.mp4"},
 
-    "ANI019":{
-        nombre:"Rana",
-        emoji:"🐸",
-        imagen:"recursos/animales/ANI019-rana/rana.jpg",
-        audio:"recursos/animales/ANI019-rana/rana.mp3",
-        video:"recursos/animales/ANI019-rana/rana.mp4"
-    },
+    "ANI019":{nombre:"Rana",emoji:"🐸",coleccion:5,imagen:"recursos/animales/ANI019-rana/rana.jpg",audio:"recursos/animales/ANI019-rana/rana.mp3",video:"recursos/animales/ANI019-rana/rana.mp4"},
 
-    "ANI020":{
-        nombre:"Salamandra",
-        emoji:"🦎",
-        imagen:"recursos/animales/ANI020-salamandra/salamandra.jpg",
-        audio:"recursos/animales/ANI020-salamandra/salamandra.mp3",
-        video:"recursos/animales/ANI020-salamandra/salamandra.mp4"
-    },
+    "ANI020":{nombre:"Salamandra",emoji:"🦎",coleccion:5,imagen:"recursos/animales/ANI020-salamandra/salamandra.jpg",audio:"recursos/animales/ANI020-salamandra/salamandra.mp3",video:"recursos/animales/ANI020-salamandra/salamandra.mp4"},
 
-    "ANI021":{
-        nombre:"Ballena",
-        emoji:"🐋",
-        imagen:"recursos/animales/ANI021-ballena/ballena.jpg",
-        audio:"recursos/animales/ANI021-ballena/ballena.mp3",
-        video:"recursos/animales/ANI021-ballena/ballena.mp4"
-    },
+    "ANI021":{nombre:"Ballena",emoji:"🐋",coleccion:4,imagen:"recursos/animales/ANI021-ballena/ballena.jpg",audio:"recursos/animales/ANI021-ballena/ballena.mp3",video:"recursos/animales/ANI021-ballena/ballena.mp4"},
 
-    "ANI022":{
-        nombre:"Cerdo",
-        emoji:"🐷",
-        imagen:"recursos/animales/ANI022-cerdo/cerdo.jpg",
-        audio:"recursos/animales/ANI022-cerdo/cerdo.mp3",
-        video:"recursos/animales/ANI022-cerdo/cerdo.mp4"
-    },
+    "ANI022":{nombre:"Cerdo",emoji:"🐷",coleccion:1,imagen:"recursos/animales/ANI022-cerdo/cerdo.jpg",audio:"recursos/animales/ANI022-cerdo/cerdo.mp3",video:"recursos/animales/ANI022-cerdo/cerdo.mp4"},
 
-    "ANI023":{
-        nombre:"Conejo",
-        emoji:"🐰",
-        imagen:"recursos/animales/ANI023-conejo/conejo.jpg",
-        audio:"recursos/animales/ANI023-conejo/conejo.mp3",
-        video:"recursos/animales/ANI023-conejo/conejo.mp4"
-    },
+    "ANI023":{nombre:"Conejo",emoji:"🐰",coleccion:1,imagen:"recursos/animales/ANI023-conejo/conejo.jpg",audio:"recursos/animales/ANI023-conejo/conejo.mp3",video:"recursos/animales/ANI023-conejo/conejo.mp4"},
 
-    "ANI024":{
-        nombre:"Jirafa",
-        emoji:"🦒",
-        imagen:"recursos/animales/ANI024-jirafa/jirafa.jpg",
-        audio:"recursos/animales/ANI024-jirafa/jirafa.mp3",
-        video:"recursos/animales/ANI024-jirafa/jirafa.mp4"
-    },
+    "ANI024":{nombre:"Jirafa",emoji:"🦒",coleccion:2,imagen:"recursos/animales/ANI024-jirafa/jirafa.jpg",audio:"recursos/animales/ANI024-jirafa/jirafa.mp3",video:"recursos/animales/ANI024-jirafa/jirafa.mp4"},
 
-    "ANI025":{
-        nombre:"Cebra",
-        emoji:"🦓",
-        imagen:"recursos/animales/ANI025-cebra/cebra.jpg",
-        audio:"recursos/animales/ANI025-cebra/cebra.mp3",
-        video:"recursos/animales/ANI025-cebra/cebra.mp4"
-    },
+    "ANI025":{nombre:"Cebra",emoji:"🦓",coleccion:2,imagen:"recursos/animales/ANI025-cebra/cebra.jpg",audio:"recursos/animales/ANI025-cebra/cebra.mp3",video:"recursos/animales/ANI025-cebra/cebra.mp4"},
 
-    "ANI026":{
-        nombre:"Oso",
-        emoji:"🐻",
-        imagen:"recursos/animales/ANI026-oso/oso.jpg",
-        audio:"recursos/animales/ANI026-oso/oso.mp3",
-        video:"recursos/animales/ANI026-oso/oso.mp4"
-    },
+    "ANI026":{nombre:"Oso",emoji:"🐻",coleccion:2,imagen:"recursos/animales/ANI026-oso/oso.jpg",audio:"recursos/animales/ANI026-oso/oso.mp3",video:"recursos/animales/ANI026-oso/oso.mp4"},
 
-    "ANI027":{
-        nombre:"Cocodrilo",
-        emoji:"🐊",
-        imagen:"recursos/animales/ANI027-cocodrilo/cocodrilo.jpg",
-        audio:"recursos/animales/ANI027-cocodrilo/cocodrilo.mp3",
-        video:"recursos/animales/ANI027-cocodrilo/cocodrilo.mp4"
-    },
+    "ANI027":{nombre:"Cocodrilo",emoji:"🐊",coleccion:2,imagen:"recursos/animales/ANI027-cocodrilo/cocodrilo.jpg",audio:"recursos/animales/ANI027-cocodrilo/cocodrilo.mp3",video:"recursos/animales/ANI027-cocodrilo/cocodrilo.mp4"},
 
-    "ANI028":{
-        nombre:"Tortuga",
-        emoji:"🐢",
-        imagen:"recursos/animales/ANI028-tortuga/tortuga.jpg",
-        audio:"recursos/animales/ANI028-tortuga/tortuga.mp3",
-        video:"recursos/animales/ANI028-tortuga/tortuga.mp4"
-    },
+    "ANI028":{nombre:"Tortuga",emoji:"🐢",coleccion:4,imagen:"recursos/animales/ANI028-tortuga/tortuga.jpg",audio:"recursos/animales/ANI028-tortuga/tortuga.mp3",video:"recursos/animales/ANI028-tortuga/tortuga.mp4"},
 
-    "ANI029":{
-        nombre:"Águila",
-        emoji:"🦅",
-        imagen:"recursos/animales/ANI029-aguila/aguila.jpg",
-        audio:"recursos/animales/ANI029-aguila/aguila.mp3",
-        video:"recursos/animales/ANI029-aguila/aguila.mp4"
-    },
+    "ANI029":{nombre:"Águila",emoji:"🦅",coleccion:3,imagen:"recursos/animales/ANI029-aguila/aguila.jpg",audio:"recursos/animales/ANI029-aguila/aguila.mp3",video:"recursos/animales/ANI029-aguila/aguila.mp4"},
 
-    "ANI030":{
-        nombre:"Pulpo",
-        emoji:"🐙",
-        imagen:"recursos/animales/ANI030-pulpo/pulpo.jpg",
-        audio:"recursos/animales/ANI030-pulpo/pulpo.mp3",
-        video:"recursos/animales/ANI030-pulpo/pulpo.mp4"
-    },
+    "ANI030":{nombre:"Pulpo",emoji:"🐙",coleccion:4,imagen:"recursos/animales/ANI030-pulpo/pulpo.jpg",audio:"recursos/animales/ANI030-pulpo/pulpo.mp3",video:"recursos/animales/ANI030-pulpo/pulpo.mp4"},
 
-    "ANI031":{
-        nombre:"Zorzal",
-        emoji:"🐦",
-        imagen:"recursos/animales/ANI031-zorzal/zorzal.jpg",
-        audio:"recursos/animales/ANI031-zorzal/zorzal.mp3",
-        video:"recursos/animales/ANI031-zorzal/zorzal.mp4"
-    },
+    "ANI031":{nombre:"Zorzal",emoji:"🐦",coleccion:3,imagen:"recursos/animales/ANI031-zorzal/zorzal.jpg",audio:"recursos/animales/ANI031-zorzal/zorzal.mp3",video:"recursos/animales/ANI031-zorzal/zorzal.mp4"},
 
-    "ANI032":{
-        nombre:"Serpiente",
-        emoji:"🐍",
-        imagen:"recursos/animales/ANI032-serpiente/serpiente.jpg",
-        audio:"recursos/animales/ANI032-serpiente/serpiente.mp3",
-        video:"recursos/animales/ANI032-serpiente/serpiente.mp4"
-    }
+    "ANI032":{nombre:"Serpiente",emoji:"🐍",coleccion:2,imagen:"recursos/animales/ANI032-serpiente/serpiente.jpg",audio:"recursos/animales/ANI032-serpiente/serpiente.mp3",video:"recursos/animales/ANI032-serpiente/serpiente.mp4"},
+
+    "ANI033":{nombre:"Cabra",emoji:"🐐",coleccion:1,imagen:"recursos/animales/ANI033-cabra/cabra.jpg",audio:"recursos/animales/ANI033-cabra/cabra.mp3",video:"recursos/animales/ANI033-cabra/cabra.mp4"},
+
+    "ANI034":{nombre:"Burro",emoji:"🫏",coleccion:1,imagen:"recursos/animales/ANI034-burro/burro.jpg",audio:"recursos/animales/ANI034-burro/burro.mp3",video:"recursos/animales/ANI034-burro/burro.mp4"},
+
+    "ANI035":{nombre:"Llama",emoji:"🦙",coleccion:1,imagen:"recursos/animales/ANI035-llama/llama.jpg",audio:"recursos/animales/ANI035-llama/llama.mp3",video:"recursos/animales/ANI035-llama/llama.mp4"},
+
+    "ANI036":{nombre:"Pavo",emoji:"🦃",coleccion:3,imagen:"recursos/animales/ANI036-pavo/pavo.jpg",audio:"recursos/animales/ANI036-pavo/pavo.mp3",video:"recursos/animales/ANI036-pavo/pavo.mp4"},
+
+    "ANI037":{nombre:"Ganso",emoji:"🪿",coleccion:3,imagen:"recursos/animales/ANI037-ganso/ganso.jpg",audio:"recursos/animales/ANI037-ganso/ganso.mp3",video:"recursos/animales/ANI037-ganso/ganso.mp4"},
+
+    "ANI038":{nombre:"Hámster",emoji:"🐹",coleccion:1,imagen:"recursos/animales/ANI038-hamster/hamster.jpg",audio:"recursos/animales/ANI038-hamster/hamster.mp3",video:"recursos/animales/ANI038-hamster/hamster.mp4"},
+
+    "ANI039":{nombre:"Tigre",emoji:"🐯",coleccion:2,imagen:"recursos/animales/ANI039-tigre/tigre.jpg",audio:"recursos/animales/ANI039-tigre/tigre.mp3",video:"recursos/animales/ANI039-tigre/tigre.mp4"},
+
+    "ANI040":{nombre:"Hipopótamo",emoji:"🦛",coleccion:2,imagen:"recursos/animales/ANI040-hipopotamo/hipopotamo.jpg",audio:"recursos/animales/ANI040-hipopotamo/hipopotamo.mp3",video:"recursos/animales/ANI040-hipopotamo/hipopotamo.mp4"},
+
+    "ANI041":{nombre:"Rinoceronte",emoji:"🦏",coleccion:2,imagen:"recursos/animales/ANI041-rinoceronte/rinoceronte.jpg",audio:"recursos/animales/ANI041-rinoceronte/rinoceronte.mp3",video:"recursos/animales/ANI041-rinoceronte/rinoceronte.mp4"},
+
+    "ANI042":{nombre:"Gorila",emoji:"🦍",coleccion:2,imagen:"recursos/animales/ANI042-gorila/gorila.jpg",audio:"recursos/animales/ANI042-gorila/gorila.mp3",video:"recursos/animales/ANI042-gorila/gorila.mp4"},
+
+    "ANI043":{nombre:"Panda",emoji:"🐼",coleccion:2,imagen:"recursos/animales/ANI043-panda/panda.jpg",audio:"recursos/animales/ANI043-panda/panda.mp3",video:"recursos/animales/ANI043-panda/panda.mp4"},
+
+    "ANI044":{nombre:"Koala",emoji:"🐨",coleccion:2,imagen:"recursos/animales/ANI044-koala/koala.jpg",audio:"recursos/animales/ANI044-koala/koala.mp3",video:"recursos/animales/ANI044-koala/koala.mp4"},
+
+    "ANI045":{nombre:"Canguro",emoji:"🦘",coleccion:2,imagen:"recursos/animales/ANI045-canguro/canguro.jpg",audio:"recursos/animales/ANI045-canguro/canguro.mp3",video:"recursos/animales/ANI045-canguro/canguro.mp4"},
+
+    "ANI046":{nombre:"Zorro",emoji:"🦊",coleccion:2,imagen:"recursos/animales/ANI046-zorro/zorro.jpg",audio:"recursos/animales/ANI046-zorro/zorro.mp3",video:"recursos/animales/ANI046-zorro/zorro.mp4"},
+
+    "ANI047":{nombre:"Lobo",emoji:"🐺",coleccion:2,imagen:"recursos/animales/ANI047-lobo/lobo.jpg",audio:"recursos/animales/ANI047-lobo/lobo.mp3",video:"recursos/animales/ANI047-lobo/lobo.mp4"},
+
+    "ANI048":{nombre:"Ardilla",emoji:"🐿️",coleccion:2,imagen:"recursos/animales/ANI048-ardilla/ardilla.jpg",audio:"recursos/animales/ANI048-ardilla/ardilla.mp3",video:"recursos/animales/ANI048-ardilla/ardilla.mp4"},
+
+    "ANI049":{nombre:"Loro",emoji:"🦜",coleccion:3,imagen:"recursos/animales/ANI049-loro/loro.jpg",audio:"recursos/animales/ANI049-loro/loro.mp3",video:"recursos/animales/ANI049-loro/loro.mp4"},
+
+    "ANI050":{nombre:"Flamenco",emoji:"🦩",coleccion:3,imagen:"recursos/animales/ANI050-flamenco/flamenco.jpg",audio:"recursos/animales/ANI050-flamenco/flamenco.mp3",video:"recursos/animales/ANI050-flamenco/flamenco.mp4"},
+
+    "ANI051":{nombre:"Pavo real",emoji:"🦚",coleccion:3,imagen:"recursos/animales/ANI051-pavoreal/pavoreal.jpg",audio:"recursos/animales/ANI051-pavoreal/pavoreal.mp3",video:"recursos/animales/ANI051-pavoreal/pavoreal.mp4"},
+
+    "ANI052":{nombre:"Colibrí",emoji:"🐦",coleccion:3,imagen:"recursos/animales/ANI052-colibri/colibri.jpg",audio:"recursos/animales/ANI052-colibri/colibri.mp3",video:"recursos/animales/ANI052-colibri/colibri.mp4"},
+
+    "ANI053":{nombre:"Pelícano",emoji:"🐦",coleccion:3,imagen:"recursos/animales/ANI053-pelicano/pelicano.jpg",audio:"recursos/animales/ANI053-pelicano/pelicano.mp3",video:"recursos/animales/ANI053-pelicano/pelicano.mp4"},
+
+    "ANI054":{nombre:"Avestruz",emoji:"🐦",coleccion:3,imagen:"recursos/animales/ANI054-avestruz/avestruz.jpg",audio:"recursos/animales/ANI054-avestruz/avestruz.mp3",video:"recursos/animales/ANI054-avestruz/avestruz.mp4"},
+
+    "ANI055":{nombre:"Foca",emoji:"🦭",coleccion:4,imagen:"recursos/animales/ANI055-foca/foca.jpg",audio:"recursos/animales/ANI055-foca/foca.mp3",video:"recursos/animales/ANI055-foca/foca.mp4"},
+
+    "ANI056":{nombre:"León marino",emoji:"🦭",coleccion:4,imagen:"recursos/animales/ANI056-leonmarino/leonmarino.jpg",audio:"recursos/animales/ANI056-leonmarino/leonmarino.mp3",video:"recursos/animales/ANI056-leonmarino/leonmarino.mp4"},
+
+    "ANI057":{nombre:"Caballito de mar",emoji:"🐠",coleccion:4,imagen:"recursos/animales/ANI057-caballitodemar/caballitodemar.jpg",audio:"recursos/animales/ANI057-caballitodemar/caballitodemar.mp3",video:"recursos/animales/ANI057-caballitodemar/caballitodemar.mp4"},
+
+    "ANI058":{nombre:"Medusa",emoji:"🪼",coleccion:4,imagen:"recursos/animales/ANI058-medusa/medusa.jpg",audio:"recursos/animales/ANI058-medusa/medusa.mp3",video:"recursos/animales/ANI058-medusa/medusa.mp4"},
+
+    "ANI059":{nombre:"Estrella de mar",emoji:"⭐",coleccion:4,imagen:"recursos/animales/ANI059-estrellademar/estrellademar.jpg",audio:"recursos/animales/ANI059-estrellademar/estrellademar.mp3",video:"recursos/animales/ANI059-estrellademar/estrellademar.mp4"},
+
+    "ANI060":{nombre:"Camaleón",emoji:"🦎",coleccion:2,imagen:"recursos/animales/ANI060-camaleon/camaleon.jpg",audio:"recursos/animales/ANI060-camaleon/camaleon.mp3",video:"recursos/animales/ANI060-camaleon/camaleon.mp4"},
+
+    "ANI061":{nombre:"Iguana",emoji:"🦎",coleccion:2,imagen:"recursos/animales/ANI061-iguana/iguana.jpg",audio:"recursos/animales/ANI061-iguana/iguana.mp3",video:"recursos/animales/ANI061-iguana/iguana.mp4"},
+
+    "ANI062":{nombre:"Caracol",emoji:"🐌",coleccion:5,imagen:"recursos/animales/ANI062-caracol/caracol.jpg",audio:"recursos/animales/ANI062-caracol/caracol.mp3",video:"recursos/animales/ANI062-caracol/caracol.mp4"},
+
+    "ANI063":{nombre:"Cangrejo",emoji:"🦀",coleccion:4,imagen:"recursos/animales/ANI063-cangrejo/cangrejo.jpg",audio:"recursos/animales/ANI063-cangrejo/cangrejo.mp3",video:"recursos/animales/ANI063-cangrejo/cangrejo.mp4"},
+
+    "ANI064":{nombre:"Araña",emoji:"🕷️",coleccion:5,imagen:"recursos/animales/ANI064-arana/arana.jpg",audio:"recursos/animales/ANI064-arana/arana.mp3",video:"recursos/animales/ANI064-arana/arana.mp4"},
+
+    "DIN001":{nombre:"Tiranosaurio rex",emoji:"🦖",coleccion:6,imagen:"recursos/prehistoricos/DIN001-tiranosaurio/tiranosaurio.jpg",audio:"recursos/prehistoricos/DIN001-tiranosaurio/tiranosaurio.mp3",video:"recursos/prehistoricos/DIN001-tiranosaurio/tiranosaurio.mp4"},
+
+    "DIN002":{nombre:"Triceratops",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN002-triceratops/triceratops.jpg",audio:"recursos/prehistoricos/DIN002-triceratops/triceratops.mp3",video:"recursos/prehistoricos/DIN002-triceratops/triceratops.mp4"},
+
+    "DIN003":{nombre:"Estegosaurio",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN003-estegosaurio/estegosaurio.jpg",audio:"recursos/prehistoricos/DIN003-estegosaurio/estegosaurio.mp3",video:"recursos/prehistoricos/DIN003-estegosaurio/estegosaurio.mp4"},
+
+    "DIN004":{nombre:"Braquiosaurio",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN004-braquiosaurio/braquiosaurio.jpg",audio:"recursos/prehistoricos/DIN004-braquiosaurio/braquiosaurio.mp3",video:"recursos/prehistoricos/DIN004-braquiosaurio/braquiosaurio.mp4"},
+
+    "DIN005":{nombre:"Velociraptor",emoji:"🦖",coleccion:6,imagen:"recursos/prehistoricos/DIN005-velociraptor/velociraptor.jpg",audio:"recursos/prehistoricos/DIN005-velociraptor/velociraptor.mp3",video:"recursos/prehistoricos/DIN005-velociraptor/velociraptor.mp4"},
+
+    "DIN006":{nombre:"Anquilosaurio",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN006-anquilosaurio/anquilosaurio.jpg",audio:"recursos/prehistoricos/DIN006-anquilosaurio/anquilosaurio.mp3",video:"recursos/prehistoricos/DIN006-anquilosaurio/anquilosaurio.mp4"},
+
+    "DIN007":{nombre:"Parasaurolophus",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN007-parasaurolophus/parasaurolophus.jpg",audio:"recursos/prehistoricos/DIN007-parasaurolophus/parasaurolophus.mp3",video:"recursos/prehistoricos/DIN007-parasaurolophus/parasaurolophus.mp4"},
+
+    "DIN008":{nombre:"Espinosaurio",emoji:"🦖",coleccion:6,imagen:"recursos/prehistoricos/DIN008-espinosaurio/espinosaurio.jpg",audio:"recursos/prehistoricos/DIN008-espinosaurio/espinosaurio.mp3",video:"recursos/prehistoricos/DIN008-espinosaurio/espinosaurio.mp4"},
+
+    "DIN009":{nombre:"Diplodocus",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN009-diplodocus/diplodocus.jpg",audio:"recursos/prehistoricos/DIN009-diplodocus/diplodocus.mp3",video:"recursos/prehistoricos/DIN009-diplodocus/diplodocus.mp4"},
+
+    "DIN010":{nombre:"Carnotauro",emoji:"🦖",coleccion:6,imagen:"recursos/prehistoricos/DIN010-carnotauro/carnotauro.jpg",audio:"recursos/prehistoricos/DIN010-carnotauro/carnotauro.mp3",video:"recursos/prehistoricos/DIN010-carnotauro/carnotauro.mp4"},
+
+    "DIN011":{nombre:"Iguanodon",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN011-iguanodon/iguanodon.jpg",audio:"recursos/prehistoricos/DIN011-iguanodon/iguanodon.mp3",video:"recursos/prehistoricos/DIN011-iguanodon/iguanodon.mp4"},
+
+    "DIN012":{nombre:"Pachycephalosaurus",emoji:"🦖",coleccion:6,imagen:"recursos/prehistoricos/DIN012-pachycephalosaurus/pachycephalosaurus.jpg",audio:"recursos/prehistoricos/DIN012-pachycephalosaurus/pachycephalosaurus.mp3",video:"recursos/prehistoricos/DIN012-pachycephalosaurus/pachycephalosaurus.mp4"},
+
+    "DIN013":{nombre:"Apatosaurio",emoji:"🦕",coleccion:6,imagen:"recursos/prehistoricos/DIN013-apatosaurio/apatosaurio.jpg",audio:"recursos/prehistoricos/DIN013-apatosaurio/apatosaurio.mp3",video:"recursos/prehistoricos/DIN013-apatosaurio/apatosaurio.mp4"},
+
+    "DIN014":{nombre:"Pteranodon",emoji:"🦅",coleccion:6,imagen:"recursos/prehistoricos/DIN014-pteranodon/pteranodon.jpg",audio:"recursos/prehistoricos/DIN014-pteranodon/pteranodon.mp3",video:"recursos/prehistoricos/DIN014-pteranodon/pteranodon.mp4"},
+
+    "DIN015":{nombre:"Mosasaurio",emoji:"🌊",coleccion:6,imagen:"recursos/prehistoricos/DIN015-mosasaurio/mosasaurio.jpg",audio:"recursos/prehistoricos/DIN015-mosasaurio/mosasaurio.mp3",video:"recursos/prehistoricos/DIN015-mosasaurio/mosasaurio.mp4"},
+
+    "DIN016":{nombre:"Plesiosaurio",emoji:"🌊",coleccion:6,imagen:"recursos/prehistoricos/DIN016-plesiosaurio/plesiosaurio.jpg",audio:"recursos/prehistoricos/DIN016-plesiosaurio/plesiosaurio.mp3",video:"recursos/prehistoricos/DIN016-plesiosaurio/plesiosaurio.mp4"}
 
 };
 
@@ -1510,26 +1566,17 @@ var animales = {
 var preguntasNivel2 = [];
 
 function generarPreguntasNivel2(){
-
     preguntasNivel2 = [];
-
     for(var codigo in animales){
-
         if(animales.hasOwnProperty(codigo)){
-
-            preguntasNivel2.push({
-                pregunta:
-                    "¿Dónde está " +
-                    obtenerArticulo(animales[codigo].nombre) +
-                    animales[codigo].nombre.toLowerCase() +
-                    "?",
-                correcto:codigo
-            });
-
+            if(coleccionActual === 0 || animales[codigo].coleccion === coleccionActual){
+                preguntasNivel2.push({
+                    pregunta:"¿Dónde está " + obtenerArticulo(animales[codigo].nombre) + animales[codigo].nombre.toLowerCase() + "?",
+                    correcto:codigo
+                });
+            }
         }
-
     }
-
 }
 
 function obtenerArticulo(nombre){
@@ -1547,7 +1594,15 @@ function obtenerArticulo(nombre){
         "Cebra":true,
         "Tortuga":true,
         "Águila":true,
-        "Serpiente":true
+        "Serpiente":true,
+        "Cabra":true,
+        "Llama":true,
+        "Ardilla":true,
+        "Foca":true,
+        "Medusa":true,
+        "Estrella de mar":true,
+        "Iguana":true,
+        "Araña":true
     };
 
     if(femeninos[nombre]){
@@ -1571,6 +1626,11 @@ var pantallaInicial =
 
 var pantallaJuego =
     document.getElementById("pantallaJuego");
+
+var pantallaMenu = document.getElementById("pantallaMenu");
+var pantallaColecciones = document.getElementById("pantallaColecciones");
+var avisoProximamente = document.getElementById("avisoProximamente");
+var textoProximamente = document.getElementById("textoProximamente");
 
 var estado =
     document.getElementById("estado");
@@ -1748,9 +1808,7 @@ function reproducirAudioOpcional(ruta){
 
 
 function reproducirAudio(ruta){
-
     return reproducirAudioOpcional(ruta);
-
 }
 
 
@@ -1759,42 +1817,11 @@ function reproducirAudio(ruta){
 ========================================================= */
 
 function precargarRecursos(){
-
-    var codigo;
-
-    for(codigo in animales){
-
-        if(
-            animales.hasOwnProperty(codigo)
-        ){
-
-            var animal =
-                animales[codigo];
-
-            var imagenTemporal =
-                new Image();
-
-            imagenTemporal.src =
-                animal.imagen;
-
-
-            if(animal.audio){
-
-                var audioTemporal =
-                    new Audio();
-
-                audioTemporal.preload =
-                    "metadata";
-
-                audioTemporal.src =
-                    animal.audio;
-
-            }
-
-        }
-
-    }
-
+    /*
+    Con 80 animales no se precargan todos los archivos.
+    Esto protege la memoria del navegador de la Smart TV.
+    Cada recurso se carga solamente cuando se escanea su tarjeta.
+    */
 }
 
 
@@ -2057,7 +2084,7 @@ function entrarAlNivel(numeroNivel){
             "🦁 NIVEL 1";
 
         pregunta.innerHTML =
-            "Escanea un animal";
+            "Escanea una colección o un animal";
 
         return;
 
@@ -2070,13 +2097,11 @@ function entrarAlNivel(numeroNivel){
             "❓ NIVEL 2";
 
         pregunta.innerHTML =
-            "Busca la tarjeta correcta";
+            "Escanea una colección";
 
         setTimeout(function(){
-
-            cargarPreguntaNivel2();
-
-        },800);
+            abrirSelectorColecciones();
+        },700);
 
         return;
 
@@ -2648,64 +2673,126 @@ function evaluarRespuestaNivel2(codigo){
 }
 
 
+
+function ocultarPantallas(){
+    pantallaInicial.style.display = "none";
+    pantallaJuego.style.display = "none";
+    pantallaJuego.classList.remove("visible");
+    pantallaMenu.style.display = "none";
+    pantallaMenu.classList.remove("visible");
+    pantallaColecciones.style.display = "none";
+    pantallaColecciones.classList.remove("visible");
+}
+
+function detenerTodo(){
+    bloqueado = false;
+    detenerAudio();
+    if(temporizadorImagen){clearTimeout(temporizadorImagen);}
+    if(temporizadorRespaldo){clearTimeout(temporizadorRespaldo);}
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+    imagen.removeAttribute("src");
+    modoCine.classList.remove("visible");
+    modoCine.style.display = "none";
+}
+
+function abrirMenuGeneral(){
+    detenerTodo();
+    nivelActual = 0;
+    coleccionActual = 0;
+    ocultarPantallas();
+    pantallaMenu.style.display = "flex";
+    pantallaMenu.classList.add("visible");
+    mantenerFoco();
+}
+
+function volverReinoAnimal(){
+    detenerTodo();
+    areaActual = "animal";
+    nivelActual = 0;
+    coleccionActual = 0;
+    preguntaActual = null;
+    ocultarPantallas();
+    reiniciarTarjetas();
+    pantallaInicial.style.display = "flex";
+    pantallaInicial.style.opacity = "1";
+    pantallaInicial.style.transform = "scale(1)";
+    mantenerFoco();
+}
+
+function mostrarProximamente(nombre){
+    textoProximamente.innerHTML = nombre + "<br><span style='font-size:55%'>Próximamente</span>";
+    avisoProximamente.classList.add("visible");
+    setTimeout(function(){
+        avisoProximamente.classList.remove("visible");
+        mantenerFoco();
+    },2200);
+}
+
+function abrirSelectorColecciones(){
+    ocultarPantallas();
+    pantallaColecciones.style.display = "flex";
+    pantallaColecciones.classList.add("visible");
+    mantenerFoco();
+}
+
+function seleccionarColeccion(numero){
+    coleccionActual = numero;
+    generarPreguntasNivel2();
+    if(nivelActual === 2){
+        ocultarPantallas();
+        pantallaJuego.style.display = "flex";
+        pantallaJuego.classList.add("visible");
+        cargarPreguntaNivel2();
+    }else if(nivelActual === 3){
+        ocultarPantallas();
+        pantallaJuego.style.display = "flex";
+        pantallaJuego.classList.add("visible");
+        estado.innerHTML = "🎵 NIVEL 3";
+        pregunta.innerHTML = "Nivel 3 próximamente";
+    }else{
+        volverReinoAnimal();
+    }
+    bloqueado = false;
+    mantenerFoco();
+}
+
 /* =========================================================
    PROCESAR CÓDIGOS
 ========================================================= */
 
 function procesarCodigo(codigo){
 
-    if(
-        !codigo ||
-        bloqueado
-    ){
+    if(!codigo){return;}
+
+    /* MENU siempre funciona, incluso durante audio o video. */
+    if(codigo === "MENU"){
+        abrirMenuGeneral();
         return;
     }
 
+    if(bloqueado){return;}
 
-    if(codigo === "NIVEL1"){
+    if(codigo === "TEMA1"){volverReinoAnimal();return;}
+    if(codigo === "TEMA2"){mostrarProximamente("Mundo Vegetal");return;}
+    if(codigo === "TEMA3"){mostrarProximamente("Mi Familia");return;}
+    if(codigo === "TEMA4"){mostrarProximamente("Mi Mundo Cotidiano");return;}
 
-        seleccionarNivel(1);
-
+    if(codigo.indexOf("COLECCION") === 0){
+        var numeroColeccion = parseInt(codigo.replace("COLECCION",""),10);
+        if(numeroColeccion >= 1 && numeroColeccion <= 6){
+            seleccionarColeccion(numeroColeccion);
+        }
         return;
-
     }
 
+    if(codigo === "NIVEL1"){seleccionarNivel(1);return;}
+    if(codigo === "NIVEL2"){seleccionarNivel(2);return;}
+    if(codigo === "NIVEL3"){seleccionarNivel(3);return;}
 
-    if(codigo === "NIVEL2"){
-
-        seleccionarNivel(2);
-
-        return;
-
-    }
-
-
-    if(codigo === "NIVEL3"){
-
-        seleccionarNivel(3);
-
-        return;
-
-    }
-
-
-    if(nivelActual === 1){
-
-        mostrarAnimal(codigo);
-
-        return;
-
-    }
-
-
-    if(nivelActual === 2){
-
-        evaluarRespuestaNivel2(
-            codigo
-        );
-
-    }
-
+    if(nivelActual === 1){mostrarAnimal(codigo);return;}
+    if(nivelActual === 2){evaluarRespuestaNivel2(codigo);return;}
 }
 
 
@@ -2759,20 +2846,10 @@ entradaCodigo.addEventListener(
 
 
 function configurarModoPrueba(){
-
     if(window.location.search.indexOf("prueba=1") !== -1){
-
-        entradaCodigo.classList.add(
-            "modo-prueba"
-        );
-
-        entradaCodigo.setAttribute(
-            "placeholder",
-            "Escribe un código y presiona Enter"
-        );
-
+        entradaCodigo.classList.add("modo-prueba");
+        entradaCodigo.setAttribute("placeholder","Escribe un código y presiona Enter");
     }
-
 }
 
 
