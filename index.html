@@ -11,6 +11,7 @@
 >
 
 <title>Mi Mundo Interactivo</title>
+<!-- Version corregida: audio opcional y modo de prueba -->
 
 <style>
 
@@ -975,6 +976,29 @@ body.tema-aves #fondoAves{
 }
 
 
+#codigo.modo-prueba{
+    top:auto;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:380px;
+    height:58px;
+    padding:10px 20px;
+    border:3px solid #ffffff;
+    border-radius:30px;
+    background:rgba(255,255,255,0.96);
+    color:#445278;
+    font-size:25px;
+    font-weight:bold;
+    text-align:center;
+    text-transform:uppercase;
+    box-shadow:0 10px 30px rgba(48,65,126,0.28);
+    outline:none;
+    opacity:1;
+    z-index:9999;
+}
+
+
 /* =========================================================
    RESPONSIVE
 ========================================================= */
@@ -1723,6 +1747,13 @@ function reproducirAudioOpcional(ruta){
 }
 
 
+function reproducirAudio(ruta){
+
+    return reproducirAudioOpcional(ruta);
+
+}
+
+
 /* =========================================================
    PRECARGA DE RECURSOS
 ========================================================= */
@@ -1747,26 +1778,18 @@ function precargarRecursos(){
                 animal.imagen;
 
 
-            var audioTemporal =
-                new Audio();
+            if(animal.audio){
 
-            audioTemporal.preload =
-                "auto";
+                var audioTemporal =
+                    new Audio();
 
-            audioTemporal.src =
-                animal.audio;
+                audioTemporal.preload =
+                    "metadata";
 
+                audioTemporal.src =
+                    animal.audio;
 
-            var videoTemporal =
-                document.createElement(
-                    "video"
-                );
-
-            videoTemporal.preload =
-                "metadata";
-
-            videoTemporal.src =
-                animal.video;
+            }
 
         }
 
@@ -2735,6 +2758,24 @@ entradaCodigo.addEventListener(
 );
 
 
+function configurarModoPrueba(){
+
+    if(window.location.search.indexOf("prueba=1") !== -1){
+
+        entradaCodigo.classList.add(
+            "modo-prueba"
+        );
+
+        entradaCodigo.setAttribute(
+            "placeholder",
+            "Escribe un código y presiona Enter"
+        );
+
+    }
+
+}
+
+
 /* =========================================================
    INICIO
 ========================================================= */
@@ -2770,6 +2811,8 @@ window.onload = function(){
     cambiarTema();
 
     generarPreguntasNivel2();
+
+    configurarModoPrueba();
 
     precargarRecursos();
 
